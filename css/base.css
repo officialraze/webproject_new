@@ -99,29 +99,9 @@ main {
 }
 
 /* Header */
-.codrops-header {
-	position: relative;
-	z-index: 100;
-	text-align: center;
-	font-size: 1rem;
-}
-
-.codrops-header__title {
-	font-size: 1rem;
-	font-weight: normal;
-	margin: 0;
-	padding: 0;
-}
-
 .info {
 	margin: 0 0 0 1.25em;
 	color: var(--color-info);
-}
-
-.github {
-	display: block;
-	margin: 0.15em 0.15em 0.15em 0.5em;
-	padding: 0.25em;
 }
 
 .title {
@@ -141,20 +121,6 @@ main {
 }
 
 /* Top Navigation Style */
-.codrops-links {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	text-align: center;
-	white-space: nowrap;
-}
-
-.codrops-icon {
-	display: inline-block;
-	margin: 0.15em;
-	padding: 0.25em;
-}
-
 .grid-wrap {
 	position: relative;
 	max-width: 1100px;
@@ -291,6 +257,21 @@ main {
 	grid-area: 1 / 1 / 1 / 1;
 }
 
+.site_title {
+	font-size: 4em;
+	text-transform: uppercase;
+	text-align: center;
+	color: var(--color-link);
+}
+
+.listeners {
+	color: #1db954;
+}
+
+.listeners i {
+	margin-right: 5px;
+}
+
 .js .content__item-img {
 	visibility: hidden;
 }
@@ -304,6 +285,7 @@ main {
 	padding: 0 5vw;
 	white-space: nowrap;
 	grid-area: 1 / 1 / 1 / 1;
+	color: var(--color-link);
 }
 
 .content__item-title > span {
@@ -363,6 +345,7 @@ main {
 .content__close,
 .content__indicator {
 	opacity: 0;
+	color: var(--color-link);
 }
 
 @media screen and (min-width: 55em) {

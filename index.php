@@ -1,9 +1,17 @@
 <?php
 
 // defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 
-$query = "SELECT*FROM `artist` ORDER BY `artist_name`";
+// query for everything
+$query = "SELECT * FROM `artist` ORDER BY `artist_name`";
+
+// query for songs in music_player
+$query_songs = "SELECT `song_name`, `album_name`, `cover`
+				FROM `artist` artist
+				INNER JOIN `songs` songs ON songs.artist_id = artist.id
+				INNER JOIN `album` album ON album.album_id = songs.album_id
+				";
 
 ?>
 <!DOCTYPE html>
@@ -16,6 +24,9 @@ $query = "SELECT*FROM `artist` ORDER BY `artist_name`";
 		<meta name="keywords" content="Webprojekt, ME3, Mediamatiker, Informatik, Dubstep, Electronic, Dance" />
 		<meta name="author" content="Melvin" />
 		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
 		<link rel="stylesheet" type="text/css" href="css/base.css" />
 		<link rel="stylesheet" type="text/css" href="css/foundation.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/app.css"/>
@@ -28,10 +39,8 @@ $query = "SELECT*FROM `artist` ORDER BY `artist_name`";
 		<!-- Icons-->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-
-		<!-- <link rel="stylesheet" type="text/css" href="css/foundation.min.css"/> -->
-
 		<!-- Include font -->
+		<link href='http://fonts.googleapis.com/css?family=Raleway:100,700,800' rel='stylesheet' type='text/css'>
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
 		<script type="text/javascript" src="js/jquery.js"></script>
@@ -40,11 +49,6 @@ $query = "SELECT*FROM `artist` ORDER BY `artist_name`";
 
 		<!-- Include Amplitude JS -->
 		<script type="text/javascript" src="js/amplitude.js"></script>
-
-		<!-- Include Style Sheet -->
-		<!-- <link rel="stylesheet" type="text/css" href="css/app.css"/> -->
-
-
 
 		<script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("U need a modern browser.");</script>
 	</head>
@@ -56,11 +60,36 @@ $query = "SELECT*FROM `artist` ORDER BY `artist_name`";
 				</div>
 			</div>
 			<h1 class="site_title">Webprojekt</h1>
+			<div id="morphsearch" class="morphsearch">
+				<form class="morphsearch-form">
+					<input class="morphsearch-input" type="search" placeholder="Suchen..."/>
+					<button class="morphsearch-submit" type="submit">Suche</button>
+				</form>
+				<div class="morphsearch-content">
+					<div class="dummy-column">
+						<h2>Künstler</h2>
+						<?php
+
+						// random 5 entries
+						$query_search = "SELECT * FROM `artist` ORDER BY RAND() LIMIT 5";
+							foreach ($pdo->query($query_search) as $row) {
+								echo '<a class="dummy-media-object" href="">';
+									echo '<img class="round" src="img/artist/round/'.$row['images'].'.jpg" alt="'.$row['artist_name'].'"/>';
+									echo '<h3>'.$row['artist_name'].'</h3>';
+								echo '</a>';
+							}
+						?>
+						<a class="show_all" href="">Alle anzeigen <i class="fas fa-arrow-right"></i></a>
+					</div>
+				</div><!-- /morphsearch-content -->
+				<span class="morphsearch-close"></span>
+			</div>
 			<div class="grid-wrap">
 				<div class="grid">
 					<?php
 
 					foreach ($pdo->query($query) as $row) {
+						// give out grid item / all artists
 						echo '<a href="#" class="grid__item">';
 							echo '<div class="grid__item-bg"></div>';
 							echo '<div class="grid__item-wrap">';
@@ -78,6 +107,7 @@ $query = "SELECT*FROM `artist` ORDER BY `artist_name`";
 				<?php
 
 				foreach ($pdo->query($query) as $row) {
+					// give out detail page
 					echo '<div class="content__item">';
 						echo '<div class="content__item-intro">';
 							echo '<img class="content__item-img" src="img/artist/'.$row['images'].'.jpg" alt="Some image" />';
@@ -85,12 +115,10 @@ $query = "SELECT*FROM `artist` ORDER BY `artist_name`";
 						echo '</div>';
 						echo '<h3 class="content__item-subtitle">"Quote"</h3>';
 						echo '<h3 class="content__item-listeners"><i class="fas fa-headphones-alt"></i>'.$row['listeners'].'</h3>';
-						echo '<div class="content__item-text"><p></p></div>';
-					echo '</div>';
-				}
+						echo '<div class="content__item-text"><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p></div>';
 
 				?>
-				<!-- <div class="music_player">
+				<div class="music_player">
 					<div id="white-player">
 					  <div class="white-player-top">
 						<div class="grid-x">
@@ -178,6 +206,24 @@ $query = "SELECT*FROM `artist` ORDER BY `artist_name`";
 							  <span class="playlist-artist-album">Virtual Riot &bull; We're Not Alone - EP</span>
 							</div>
 						  </div>
+
+						  <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="1">
+							<img src="img/covers/purpledragons.jpg"/>
+
+							<div class="playlist-song-meta">
+							  <span class="playlist-song-name">Purple Dragons (Dragons VIP)</span>
+							  <span class="playlist-artist-album">Virtual Riot &bull; Purple Dragons (Dragons VIP) - Single</span>
+							</div>
+						  </div>
+
+						  <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="2">
+							<img src="img/covers/presetjunkies.jpg"/>
+
+							<div class="playlist-song-meta">
+							  <span class="playlist-song-name">Remedy Ft. Leah Culver</span>
+							  <span class="playlist-artist-album">Virtual Riot &bull; Preset Junkies EP</span>
+							</div>
+						  </div>
 						</div>
 
 						<div class="white-player-playlist-controls">
@@ -201,20 +247,73 @@ $query = "SELECT*FROM `artist` ORDER BY `artist_name`";
 						</div>
 					  </div>
 					</div>
-				</div> -->
+				</div>
+				<?php echo '</div>'; } ?>
 				<button class="content__close"><i class="fas fa-times"></i></button>
 				<svg class="content__indicator icon icon--caret"><use xlink:href="#icon-caret"></use></svg>
 			</div>
+			<div class="overlay"></div>
 		</main>
+		<script src="js/classie.js"></script>
 		<script src="js/imagesloaded.pkgd.min.js"></script>
 		<script src="js/masonry.pkgd.min.js"></script>
 		<script src="js/charming.min.js"></script>
 		<script src="js/TweenMax.min.js"></script>
 		<script src="js/demo.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+		<script>
+			(function() {
+				var morphSearch = document.getElementById( 'morphsearch' ),
+					input = morphSearch.querySelector( 'input.morphsearch-input' ),
+					ctrlClose = morphSearch.querySelector( 'span.morphsearch-close' ),
+					isOpen = isAnimating = false,
+					// show/hide search area
+					toggleSearch = function(evt) {
+						// return if open and the input gets focused
+						if( evt.type.toLowerCase() === 'focus' && isOpen ) return false;
+
+						var offsets = morphsearch.getBoundingClientRect();
+						if( isOpen ) {
+							classie.remove( morphSearch, 'open' );
+
+							// trick to hide input text once the search overlay closes
+							// todo: hardcoded times, should be done after transition ends
+							if( input.value !== '' ) {
+								setTimeout(function() {
+									classie.add( morphSearch, 'hideInput' );
+									setTimeout(function() {
+										classie.remove( morphSearch, 'hideInput' );
+										input.value = '';
+									}, 300 );
+								}, 500);
+							}
+
+							input.blur();
+						}
+						else {
+							classie.add( morphSearch, 'open' );
+						}
+						isOpen = !isOpen;
+					};
+
+				// events
+				input.addEventListener( 'focus', toggleSearch );
+				ctrlClose.addEventListener( 'click', toggleSearch );
+				// esc key closes search overlay
+				// keyboard navigation events
+				document.addEventListener( 'keydown', function( ev ) {
+					var keyCode = ev.keyCode || ev.which;
+					if( keyCode === 27 && isOpen ) {
+						toggleSearch(ev);
+					}
+				} );
+
+
+				/***** for demo purposes only: don't allow to submit the form *****/
+				morphSearch.querySelector( 'button[type="submit"]' ).addEventListener( 'click', function(ev) { ev.preventDefault(); } );
+			})();
+		</script>
+
+		<!-- for all the songs -->
 		<script type="text/javascript">
 		  Amplitude.init({
 			"songs": [
@@ -224,6 +323,22 @@ $query = "SELECT*FROM `artist` ORDER BY `artist_name`";
 				"album": "We're Not Alone - EP",
 				"url": "music/werenotalone.mp3",
 				"cover_art_url": "img/covers/notalone.jpg"
+			  },
+
+			  {
+				"name": "Purple Dragons (Dragons VIP)",
+				"artist": "Virtual Riot",
+				"album": "Purple Dragons (Dragons VIP) - Single",
+				"url": "music/purpledragons.mp3",
+				"cover_art_url": "img/covers/purpledragons.jpg"
+			  },
+
+			  {
+				"name": "Remedy Ft. Leah Culver",
+				"artist": "Virtual Riot",
+				"album": "Preset Junkies EP",
+				"url": "music/remedy.mp3",
+				"cover_art_url": "img/covers/presetjunkies.jpg"
 			  },
 			]
 		  });

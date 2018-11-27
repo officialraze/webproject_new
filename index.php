@@ -14,6 +14,8 @@
 		<meta name="author" content="Melvin" />
 		<link rel="shortcut icon" href="favicon.ico">
 		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<link rel="stylesheet" type="text/css" href="css/foundation.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
 
 		<!-- js for player -->
 		<script type="text/javascript" src="js/jquery.js"></script>
@@ -29,12 +31,12 @@
 		<!-- Include font -->
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
-		<script type="text/javascript" src="/js/jquery.js"></script>
-		<script type="text/javascript" src="/js/foundation.min.js"></script>
-		<script type="text/javascript" src="/js/functions.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/foundation.min.js"></script>
+		<script type="text/javascript" src="js/functions.js"></script>
 
 		<!-- Include Amplitude JS -->
-		<script type="text/javascript" src="/js/amplitude.js"></script>
+		<script type="text/javascript" src="js/amplitude.js"></script>
 
 		<!-- Include Style Sheet -->
 		<!-- <link rel="stylesheet" type="text/css" href="css/app.css"/> -->
@@ -314,7 +316,7 @@
 				"name": "We're Not Alone",
 				"artist": "Virtual Riot",
 				"album": "We're Not Alone - EP",
-				// "url": "../songs/Ancient Astronauts - Risin' High (feat Raashan Ahmad).mp3",
+				"url": "music/werenotalone.mp3",
 				"cover_art_url": "img/covers/notalone.jpg"
 			  },
 			]

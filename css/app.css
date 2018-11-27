@@ -11,9 +11,9 @@ div#white-player {
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
   font-family: "Lato", sans-serif;
-  margin-left: 50px;
-  margin-top: 50px;
   position: relative;
+  margin: 0 auto;
+  margin-top: 100px;
 }
 
 div.white-player-top {
@@ -568,10 +568,6 @@ div.song-to-add a.add-to-playlist-button {
 /*
   3. Layout
 */
-body {
-  background-image: linear-gradient(-134deg, #C182DC 0%, #FB7C62 94%, #FF7C5B 100%);
-  height: 100vh;
-}
 
 /*
   4. Pages

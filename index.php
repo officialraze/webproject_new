@@ -1,7 +1,7 @@
 <?php
 
 // defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
 
 // query for everything
 $query = "SELECT * FROM `artist` ORDER BY `artist_name`";

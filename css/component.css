@@ -358,6 +358,20 @@ input[type="search"] { /* reset normalize */
 	opacity: 1;
 }
 
+@media screen and (max-width: 750px) {
+	.morphsearch {
+		width: 80%;
+		margin: 0 auto;
+		top: 210px;
+	}
+}
+
+@media screen and (max-width: 550px) {
+	.site_title {
+		font-size: 3em;
+	}
+}
+
 @media screen and (max-width: 53.125em) {
 	.morphsearch-input {
 		padding: 0 25% 0 10px;
@@ -376,13 +390,5 @@ input[type="search"] { /* reset normalize */
 	.morphsearch.open .morphsearch-submit {
 		-webkit-transform: translate3d(0,-50%,0) scale3d(0.5,0.5,1);
 		transform: translate3d(0,-50%,0) scale3d(0.5,0.5,1);
-	}
-}
-
-@media screen and (max-width: 60.625em) {
-	.morphsearch {
-		width: 80%;
-		top: 10%;
-		right: 10%;
 	}
 }

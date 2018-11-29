@@ -1,10 +1,13 @@
 <?php
 
 // defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 
 // query for everything
-$query = "SELECT * FROM `artist` ORDER BY `artist_name`";
+$query = "SELECT * FROM `artist` artists
+		  INNER JOIN `description` infos ON infos.artist_id = artists.id
+		  ORDER BY `artist_name`
+		  ";
 
 // query for songs in music_player
 $query_songs = "SELECT `song_name`, `album_name`, `cover`
@@ -12,6 +15,14 @@ $query_songs = "SELECT `song_name`, `album_name`, `cover`
 				INNER JOIN `songs` songs ON songs.artist_id = artist.id
 				INNER JOIN `album` album ON album.album_id = songs.album_id
 				";
+
+//clear variable
+$search = "";
+
+// check if query is there and set new variable
+if(isset($_POST['query'])) {
+	$search = $_POST['query'];
+}
 
 ?>
 <!DOCTYPE html>
@@ -49,20 +60,22 @@ $query_songs = "SELECT `song_name`, `album_name`, `cover`
 
 		<!-- Include Amplitude JS -->
 		<script type="text/javascript" src="js/amplitude.js"></script>
-
 		<script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("U need a modern browser.");</script>
 	</head>
 	<body class="loading">
 		<main>
 			<div class="frame">
 				<div class="title">
-					<h3 class="title__name"><a href=""><img src="img/logo.png" width="100" alt="Logo"></a></h3>
+					<h3 class="title__name"><a href=""><img src="img/ghost-solid.svg" width="60" alt="Logo"></a></h3>
 				</div>
 			</div>
+			<p class="navipoint"><a href="login.php">Login</a></p>
+
 			<h1 class="site_title">Webprojekt</h1>
 			<div id="morphsearch" class="morphsearch">
-				<form class="morphsearch-form">
-					<input class="morphsearch-input" type="search" placeholder="Suchen..."/>
+				<form class="morphsearch-form" action="" method="POST">
+					<input class="morphsearch-input" name="query" type="text" placeholder="Suchen..."/>
+					<input style="display: none;"type="submit" name="" value="">
 					<button class="morphsearch-submit" type="submit">Suche</button>
 				</form>
 				<div class="morphsearch-content">
@@ -70,7 +83,7 @@ $query_songs = "SELECT `song_name`, `album_name`, `cover`
 						<h2>Künstler</h2>
 						<?php
 
-						// random 5 entries
+						// random 5 entries in search overlay
 						$query_search = "SELECT * FROM `artist` ORDER BY RAND() LIMIT 5";
 							foreach ($pdo->query($query_search) as $row) {
 								echo '<a class="dummy-media-object" href="">';
@@ -84,40 +97,125 @@ $query_songs = "SELECT `song_name`, `album_name`, `cover`
 				</div><!-- /morphsearch-content -->
 				<span class="morphsearch-close"></span>
 			</div>
+			<?php
+				if(strlen($search) >= 3) {
+					echo "<h1 class='search_text'>Ergebnisse für: <strong>".$search."</strong></h1>";
+				}
+				else if(strlen($search) < 3 && strlen($search) > 0) {
+					echo "<h1 class='search_text'><strong>Mindestens 3 Zeichen eingeben</strong></h1>";
+				}
+			?>
 			<div class="grid-wrap">
 				<div class="grid">
+
 					<?php
 
-					foreach ($pdo->query($query) as $row) {
-						// give out grid item / all artists
-						echo '<a href="#" class="grid__item">';
-							echo '<div class="grid__item-bg"></div>';
-							echo '<div class="grid__item-wrap">';
-								echo '<img class="grid__item-img" src="img/artist/'.$row['images'].'.jpg" alt="'.$row['artist_name'].'" />';
-							echo '</div>';
-							echo '<h3 class="grid__item-title">'.$row['artist_name'].'</h3>';
-							echo '<h4 class="grid__item-number">'.$row['genre'].'</h4>';
-						echo '</a>';
-					}
+					// if search input has more than 3 letters
+					if(strlen($search) >= 3) {
 
+			            // if variable is not empty, set query to search value in name and genre
+			            if(!empty($search) || isset($search)) {
+							$sql = "SELECT * FROM `artist` artists
+									INNER JOIN `description` infos ON infos.artist_id = artists.id
+									WHERE `artist_name` LIKE '%".$search."%' OR `genre` LIKE '%".$search."%'
+									  ";
+			            }
+
+						// if nothing typed in, set query to all
+						else {
+							$sql = "SELECT * FROM `artist` artists
+									INNER JOIN `description` infos ON infos.artist_id = artists.id
+									ORDER BY `artist_name`
+									  ";
+			            }
+
+						foreach ($pdo->query($sql) as $row) {
+
+							if (is_array($row) && !empty($row)) {
+								// give out grid item / all artists
+								echo '<a href="#" class="grid__item">';
+									echo '<div class="grid__item-bg"></div>';
+									echo '<div class="grid__item-wrap">';
+										echo '<img class="grid__item-img" src="img/artist/'.$row['images'].'.jpg" alt="'.$row['artist_name'].'" />';
+									echo '</div>';
+									echo '<h3 class="grid__item-title">'.$row['artist_name'].'</h3>';
+									echo '<h4 class="grid__item-number">'.$row['genre'].'</h4>';
+								echo '</a>';
+							}
+							else {
+								echo '<strong class="no_entries">Keine Ergebnisse gefunden</strong>';
+							}
+			            }
+			        }
+
+					// if empty show all
+					else if(empty($search)){
+						foreach ($pdo->query($query) as $row) {
+							// give out grid item / all artists
+							echo '<a href="#" class="grid__item">';
+								echo '<div class="grid__item-bg"></div>';
+								echo '<div class="grid__item-wrap">';
+									echo '<img class="grid__item-img" src="img/artist/'.$row['images'].'.jpg" alt="'.$row['artist_name'].'" />';
+								echo '</div>';
+								echo '<h3 class="grid__item-title">'.$row['artist_name'].'</h3>';
+								echo '<h4 class="grid__item-number">'.$row['genre'].'</h4>';
+							echo '</a>';
+			            }
+					}
 					?>
 				</div>
 			</div>
 			<div class="content">
 				<?php
 
-				foreach ($pdo->query($query) as $row) {
-					// give out detail page
-					echo '<div class="content__item">';
-						echo '<div class="content__item-intro">';
-							echo '<img class="content__item-img" src="img/artist/'.$row['images'].'.jpg" alt="Some image" />';
-							echo '<h2 class="content__item-title">'.$row['artist_name'].'</h2>';
-						echo '</div>';
-						echo '<h3 class="content__item-subtitle">"Quote"</h3>';
-						echo '<h3 class="content__item-listeners"><i class="fas fa-headphones-alt"></i>'.$row['listeners'].'</h3>';
-						echo '<div class="content__item-text"><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p></div>';
+				// if search input has more than 3 letters
+				if(strlen($search) >= 3) {
 
-				?>
+					// if variable is not empty, set query to search value
+					if(!empty($search) || isset($search)) {
+						$sql = "SELECT * FROM `artist` artists
+								INNER JOIN `description` infos ON infos.artist_id = artists.id
+								WHERE `artist_name` LIKE '%".$search."%'
+								";
+					}
+
+					// if nothing typed in, set query to all
+					else {
+						$sql = "SELECT * FROM `artist` artists
+								  INNER JOIN `description` infos ON infos.artist_id = artists.id
+								  ORDER BY `artist_name`
+								  ";
+					}
+
+					foreach ($pdo->query($sql) as $row) {
+						// give out detail page
+						echo '<div class="content__item">';
+							echo '<div class="content__item-intro">';
+								echo '<img class="content__item-img" src="img/artist/'.$row['images'].'.jpg" alt="Some image" />';
+								echo '<h2 class="content__item-title">'.$row['artist_name'].'</h2>';
+							echo '</div>';
+							echo '<h3 class="content__item-subtitle">'.$row['quote'].'</h3>';
+							echo '<h3 class="content__item-listeners"><i class="fas fa-headphones-alt"></i>'.$row['listeners'].'</h3>';
+							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
+							echo "</div>";
+					}
+
+				}
+
+				// if empty show all
+				else if(empty($search)) {
+					foreach ($pdo->query($query) as $row) {
+						// give out detail page
+						echo '<div class="content__item">';
+							echo '<div class="content__item-intro">';
+								echo '<img class="content__item-img" src="img/artist/'.$row['images'].'.jpg" alt="Some image" />';
+								echo '<h2 class="content__item-title">'.$row['artist_name'].'</h2>';
+							echo '</div>';
+							echo '<h3 class="content__item-subtitle">'.$row['quote'].'</h3>';
+							echo '<h3 class="content__item-listeners"><i class="fas fa-headphones-alt"></i>'.$row['listeners'].'</h3>';
+							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
+							?>
+
 				<div class="music_player">
 					<div id="white-player">
 					  <div class="white-player-top">
@@ -248,7 +346,8 @@ $query_songs = "SELECT `song_name`, `album_name`, `cover`
 					  </div>
 					</div>
 				</div>
-				<?php echo '</div>'; } ?>
+
+				<?php echo "</div>"; } } ?>
 				<button class="content__close"><i class="fas fa-times"></i></button>
 				<svg class="content__indicator icon icon--caret"><use xlink:href="#icon-caret"></use></svg>
 			</div>
@@ -262,6 +361,7 @@ $query_songs = "SELECT `song_name`, `album_name`, `cover`
 		<script src="js/demo.js"></script>
 		<script>
 			(function() {
+				// morph to fullscreen search
 				var morphSearch = document.getElementById( 'morphsearch' ),
 					input = morphSearch.querySelector( 'input.morphsearch-input' ),
 					ctrlClose = morphSearch.querySelector( 'span.morphsearch-close' ),
@@ -307,8 +407,7 @@ $query_songs = "SELECT `song_name`, `album_name`, `cover`
 					}
 				} );
 
-
-				/***** for demo purposes only: don't allow to submit the form *****/
+				// make button not clickable (search icon)
 				morphSearch.querySelector( 'button[type="submit"]' ).addEventListener( 'click', function(ev) { ev.preventDefault(); } );
 			})();
 		</script>

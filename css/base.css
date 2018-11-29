@@ -62,6 +62,10 @@ a {
 	outline: none;
 }
 
+.navipoint {
+	text-align: center;
+}
+
 a:hover,
 a:focus {
 	color: var(--color-link-hover);
@@ -87,6 +91,16 @@ a:focus {
 
 main {
 	position: relative;
+}
+
+.search_text {
+	text-align: center;
+	font-size: 20px;
+	line-height: 28px;
+}
+
+.search_text strong {
+	color: var(--color-link);
 }
 
 .content__close .fa-times {

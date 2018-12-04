@@ -28,7 +28,7 @@ if(isset($_POST['query'])) {
 <!DOCTYPE html>
 <html lang="de" class="no-js">
 	<head>
-		<meta charset="UTF-8" />
+		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Web Projekt | Melvin Lauber</title>
 		<meta name="description" content="Dies ist ein Webprojekt für Informatik der Klasse ME3." />
@@ -69,7 +69,6 @@ if(isset($_POST['query'])) {
 					<h3 class="title__name"><a href=""><img src="img/ghost-solid.svg" width="60" alt="Logo"></a></h3>
 				</div>
 			</div>
-			<p class="navipoint"><a href="login.php">Login</a></p>
 
 			<h1 class="site_title">Webprojekt</h1>
 			<div id="morphsearch" class="morphsearch">

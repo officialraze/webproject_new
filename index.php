@@ -66,7 +66,7 @@ if(isset($_POST['query'])) {
 		<main>
 			<div class="frame">
 				<div class="title">
-					<h3 class="title__name"><a href=""><img src="img/ghost-solid.svg" width="60" alt="Logo"></a></h3>
+					<h3 class="title__name"><a href=""><img src="img/logo.png" width="60" alt="Logo"></a></h3>
 				</div>
 			</div>
 
@@ -125,7 +125,7 @@ if(isset($_POST['query'])) {
 							$sql = "SELECT * FROM `artist` artists
 									INNER JOIN `description` infos ON infos.artist_id = artists.id
 									ORDER BY `artist_name`
-									  ";
+								  	";
 			            }
 
 						foreach ($pdo->query($sql) as $row) {
@@ -215,7 +215,7 @@ if(isset($_POST['query'])) {
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
 							?>
 
-				<div class="music_player">
+				<!-- <div class="music_player">
 					<div id="white-player">
 					  <div class="white-player-top">
 						<div class="grid-x">
@@ -344,7 +344,7 @@ if(isset($_POST['query'])) {
 						</div>
 					  </div>
 					</div>
-				</div>
+				</div> -->
 
 				<?php echo "</div>"; } } ?>
 				<button class="content__close"><i class="fas fa-times"></i></button>

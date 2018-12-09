@@ -27,6 +27,13 @@ a {
 	outline: none;
 }
 
+.content__item-listeners {
+	position: relative;
+	top: -30px;
+	text-align: center;
+	color: #1DB954;
+}
+
 a:hover,
 a:focus {
 	color: #ec5a62;

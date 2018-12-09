@@ -1,7 +1,7 @@
 <?php
 
 // defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'dbadmin', 'db123');
 
 // query for everything
 $query = "SELECT * FROM `artist` artists
@@ -80,21 +80,6 @@ if(isset($_POST['query'])) {
 					<button class="morphsearch-submit" type="submit">Suche</button>
 				</form>
 				<div class="morphsearch-content">
-					<div class="dummy-column">
-						<h2>Künstler</h2>
-						<?php
-
-						// random 5 entries in search overlay
-						$query_search = "SELECT * FROM `artist` ORDER BY RAND() LIMIT 5";
-							foreach ($pdo->query($query_search) as $row) {
-								echo '<a class="dummy-media-object" href="">';
-									echo '<img class="round" src="img/artist/round/'.$row['images'].'.jpg" alt="'.$row['artist_name'].'"/>';
-									echo '<h3>'.$row['artist_name'].'</h3>';
-								echo '</a>';
-							}
-						?>
-						<a class="show_all" href="">Alle anzeigen <i class="fas fa-arrow-right"></i></a>
-					</div>
 				</div><!-- /morphsearch-content -->
 				<span class="morphsearch-close"></span>
 			</div>
@@ -200,7 +185,7 @@ if(isset($_POST['query'])) {
 								echo '<h2 class="content__item-title">'.$row['artist_name'].'</h2>';
 							echo '</div>';
 							echo '<h3 class="content__item-subtitle">'.$row['quote'].'</h3>';
-							echo '<h3 class="content__item-listeners"><i class="fas fa-headphones-alt"></i>'.$row['listeners'].'</h3>';
+							echo '<h3 class="content__item-listeners"><i class="fab fa-spotify"></i>'.$row['listeners'].'</h3>';
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
 							echo "</div>";
 					}
@@ -217,7 +202,7 @@ if(isset($_POST['query'])) {
 								echo '<h2 class="content__item-title">'.$row['artist_name'].'</h2>';
 							echo '</div>';
 							echo '<h3 class="content__item-subtitle">'.$row['quote'].'</h3>';
-							echo '<h3 class="content__item-listeners"><i class="fas fa-headphones-alt"></i>'.$row['listeners'].'</h3>';
+							echo '<h3 class="content__item-listeners"><i class="fab fa-spotify"></i> '.$row['listeners'].'</h3>';
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
 				?>
 

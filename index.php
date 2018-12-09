@@ -35,6 +35,8 @@ if(isset($_POST['query'])) {
 		<meta name="keywords" content="Webprojekt, ME3, Mediamatiker, Informatik, Dubstep, Electronic, Dance" />
 		<meta name="author" content="Melvin" />
 		<link rel="shortcut icon" href="favicon.ico">
+
+		<!-- styles -->
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="css/component.css" />
 		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
@@ -97,9 +99,11 @@ if(isset($_POST['query'])) {
 				<span class="morphsearch-close"></span>
 			</div>
 			<?php
+				// if search-text (string) is longer than 3
 				if(strlen($search) >= 3) {
 					echo "<h1 class='search_text'>Ergebnisse für: <strong>".$search."</strong></h1>";
 				}
+				// if not more than 3
 				else if(strlen($search) < 3 && strlen($search) > 0) {
 					echo "<h1 class='search_text'><strong>Mindestens 3 Zeichen eingeben</strong></h1>";
 				}
@@ -128,6 +132,7 @@ if(isset($_POST['query'])) {
 								  	";
 			            }
 
+						// give out entries
 						foreach ($pdo->query($sql) as $row) {
 
 							if (is_array($row) && !empty($row)) {
@@ -166,6 +171,7 @@ if(isset($_POST['query'])) {
 			</div>
 			<div class="content">
 				<?php
+				// this is for the content in the detail page
 
 				// if search input has more than 3 letters
 				if(strlen($search) >= 3) {
@@ -187,7 +193,7 @@ if(isset($_POST['query'])) {
 					}
 
 					foreach ($pdo->query($sql) as $row) {
-						// give out detail page
+						// give out detail page (description etc)
 						echo '<div class="content__item">';
 							echo '<div class="content__item-intro">';
 								echo '<img class="content__item-img" src="img/artist/'.$row['images'].'.jpg" alt="Some image" />';
@@ -213,138 +219,7 @@ if(isset($_POST['query'])) {
 							echo '<h3 class="content__item-subtitle">'.$row['quote'].'</h3>';
 							echo '<h3 class="content__item-listeners"><i class="fas fa-headphones-alt"></i>'.$row['listeners'].'</h3>';
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
-							?>
-
-				<!-- <div class="music_player">
-					<div id="white-player">
-					  <div class="white-player-top">
-						<div class="grid-x">
-						  <div class="large-3 medium-3 small-3 cell">
-
-						  </div>
-						  <div class="large-6 medium-6 small-6 cell">
-							<span class="now-playing">Läuft gerade</span>
-						  </div>
-						  <div class="large-3 medium-3 small-3 cell">
-							<img src="img/show-playlist.svg" class="show-playlist"/>
-						  </div>
-						</div>
-					  </div>
-
-					  <div id="white-player-center">
-						<img amplitude-song-info="cover_art_url" amplitude-main-song-info="true" class="main-album-art"/>
-
-						<div class="song-meta-data">
-						  <span amplitude-song-info="name" amplitude-main-song-info="true" class="song-name"></span>
-						  <span amplitude-song-info="artist" amplitude-main-song-info="true" class="song-artist"></span>
-						</div>
-
-						<div class="time-progress">
-						  <div class="grid-x">
-							<div class="large-12 medium-12 small-12 cell">
-							  <div id="progress-container">
-								<input type="range" class="amplitude-song-slider" amplitude-main-song-slider="true"/>
-									  <progress id="song-played-progress" class="amplitude-song-played-progress" amplitude-main-song-played-progress="true"></progress>
-									  <progress id="song-buffered-progress" class="amplitude-buffered-progress" value="0"></progress>
-							  </div>
-							</div>
-						  </div>
-
-						  <div class="grid-x">
-							<div class="large-6 medium-6 small-6 cell">
-							  <span class="current-time">
-									  <span class="amplitude-current-minutes" amplitude-main-current-minutes="true"></span>:<span class="amplitude-current-seconds" amplitude-main-current-seconds="true"></span>
-									</span>
-							</div>
-							<div class="large-6 medium-6 small-6 cell">
-							  <span class="duration">
-									  <span class="amplitude-duration-minutes" amplitude-main-duration-minutes="true"></span>:<span class="amplitude-duration-seconds" amplitude-main-duration-seconds="true"></span>
-									</span>
-							</div>
-						  </div>
-						</div>
-					  </div>
-
-					  <div id="white-player-controls">
-						<div class="grid-x">
-						  <div class="large-12 medium-12 small-12 cell">
-							<div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle"></div>
-							<div class="amplitude-prev" id="previous"></div>
-							<div class="amplitude-play-pause" amplitude-main-play-pause="true" id="play-pause"></div>
-							<div class="amplitude-next" id="next"></div>
-							<div class="amplitude-repeat" id="repeat"></div>
-						  </div>
-						</div>
-					  </div>
-
-					  <div id="white-player-playlist-container">
-						<div class="white-player-playlist-top">
-						  <div class="grid-x">
-							<div class="large-3 medium-3 small-3 cell">
-
-							</div>
-							<div class="large-6 medium-6 small-6 cell">
-							  <span class="queue">Warteschlange</span>
-							</div>
-							<div class="large-3 medium-3 small-3 cell">
-							  <img src="img/close.svg" class="close-playlist"/>
-							</div>
-						  </div>
-						</div>
-
-						<div class="white-player-up-next">Nächster Song</div>
-
-						<div class="white-player-playlist">
-						  <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="0">
-							<img src="img/covers/notalone.jpg"/>
-
-							<div class="playlist-song-meta">
-							  <span class="playlist-song-name">We're Not Alone</span>
-							  <span class="playlist-artist-album">Virtual Riot &bull; We're Not Alone - EP</span>
-							</div>
-						  </div>
-
-						  <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="1">
-							<img src="img/covers/purpledragons.jpg"/>
-
-							<div class="playlist-song-meta">
-							  <span class="playlist-song-name">Purple Dragons (Dragons VIP)</span>
-							  <span class="playlist-artist-album">Virtual Riot &bull; Purple Dragons (Dragons VIP) - Single</span>
-							</div>
-						  </div>
-
-						  <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="2">
-							<img src="img/covers/presetjunkies.jpg"/>
-
-							<div class="playlist-song-meta">
-							  <span class="playlist-song-name">Remedy Ft. Leah Culver</span>
-							  <span class="playlist-artist-album">Virtual Riot &bull; Preset Junkies EP</span>
-							</div>
-						  </div>
-						</div>
-
-						<div class="white-player-playlist-controls">
-						  <img amplitude-song-info="cover_art_url" amplitude-main-song-info="true" class="playlist-album-art"/>
-
-						  <div class="playlist-controls">
-							<div class="grid-x">
-							  <div class="large-6 medium-6 small-6 cell">
-								<span amplitude-song-info="name" amplitude-main-song-info="true" class="song-name"></span>
-								<span amplitude-song-info="artist" amplitude-main-song-info="true" class="song-artist"></span>
-							  </div>
-							  <div class="large-6 medium-6 small-6 cell">
-								<div class="playlist-control-wrapper">
-								  <div class="amplitude-prev" id="playlist-previous"></div>
-								  <div class="amplitude-play-pause" amplitude-main-play-pause="true" id="playlist-play-pause"></div>
-								  <div class="amplitude-next" id="playlist-next"></div>
-								</div>
-							  </div>
-							</div>
-						  </div>
-						</div>
-					  </div>
-					</div>
-				</div> -->
+				?>
 
 				<?php echo "</div>"; } } ?>
 				<button class="content__close"><i class="fas fa-times"></i></button>
@@ -409,37 +284,6 @@ if(isset($_POST['query'])) {
 				// make button not clickable (search icon)
 				morphSearch.querySelector( 'button[type="submit"]' ).addEventListener( 'click', function(ev) { ev.preventDefault(); } );
 			})();
-		</script>
-
-		<!-- for all the songs -->
-		<script type="text/javascript">
-		  Amplitude.init({
-			"songs": [
-			  {
-				"name": "We're Not Alone",
-				"artist": "Virtual Riot",
-				"album": "We're Not Alone - EP",
-				"url": "music/werenotalone.mp3",
-				"cover_art_url": "img/covers/notalone.jpg"
-			  },
-
-			  {
-				"name": "Purple Dragons (Dragons VIP)",
-				"artist": "Virtual Riot",
-				"album": "Purple Dragons (Dragons VIP) - Single",
-				"url": "music/purpledragons.mp3",
-				"cover_art_url": "img/covers/purpledragons.jpg"
-			  },
-
-			  {
-				"name": "Remedy Ft. Leah Culver",
-				"artist": "Virtual Riot",
-				"album": "Preset Junkies EP",
-				"url": "music/remedy.mp3",
-				"cover_art_url": "img/covers/presetjunkies.jpg"
-			  },
-			]
-		  });
 		</script>
 	</body>
 </html>

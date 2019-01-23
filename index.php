@@ -1,5 +1,10 @@
 <?php
 
+// session information
+session_start();
+$user_id = $_SESSION['userid'];
+
+echo "<pre>";print_r($_SESSION);echo "</pre>";
 // defenitions
 $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 
@@ -8,13 +13,6 @@ $query = "SELECT * FROM `artist` artists
 		  INNER JOIN `description` infos ON infos.artist_id = artists.id
 		  ORDER BY `artist_name`
 		  ";
-
-// query for songs in music_player
-$query_songs = "SELECT `song_name`, `album_name`, `cover`
-				FROM `artist` artist
-				INNER JOIN `songs` songs ON songs.artist_id = artist.id
-				INNER JOIN `album` album ON album.album_id = songs.album_id
-				";
 
 //clear variable
 $search = "";
@@ -73,6 +71,18 @@ if(isset($_POST['query'])) {
 			</div>
 
 			<h1 class="site_title">Webprojekt</h1>
+			<div class="login_form">
+				<ul>
+					<?php if (!isset($_SESSION['userid'])) { ?>
+						<li><a href="register.php">Registrieren</a></li>
+						<li><a href="login.php">Anmelden</a></li>
+					<?php } ?>
+					<?php if (isset($_SESSION['userid'])) { ?>
+						<li><a href="logout.php">Ausloggen</a></li>
+						<li><a href="dashboard.php">Dashboard</a></li>
+					<?php } ?>
+				</ul>
+			</div>
 			<div id="morphsearch" class="morphsearch">
 				<form class="morphsearch-form" action="" method="POST">
 					<input class="morphsearch-input" name="query" type="text" placeholder="Suchen..."/>
@@ -82,6 +92,22 @@ if(isset($_POST['query'])) {
 				<div class="morphsearch-content">
 				</div><!-- /morphsearch-content -->
 				<span class="morphsearch-close"></span>
+			</div>
+			<div class="logged_in">
+				<?php
+
+					// check if logged in
+					if (isset($_SESSION['userid'])) {
+						$sql_user = "SELECT * FROM `users` user
+								WHERE `id` = $user_id
+							  ";
+					  	// give out user which is logged in
+					  	foreach ($pdo->query($sql_user) as $row) {
+							echo 'Eingeloggt als: '. $row['vorname'] .' '.$row['nachname'] ;
+						}
+					}
+
+				?>
 			</div>
 			<?php
 				// if search-text (string) is longer than 3
@@ -93,6 +119,14 @@ if(isset($_POST['query'])) {
 					echo "<h1 class='search_text'><strong>Mindestens 3 Zeichen eingeben</strong></h1>";
 				}
 			?>
+			<div class="login_success">
+				<?php
+					// if(isset($_SESSION['userid'])) {
+					// 	die('Bitte zuerst <a href="login.php">einloggen</a>');
+					// }
+
+				?>
+			</div>
 			<div class="grid-wrap">
 				<div class="grid">
 

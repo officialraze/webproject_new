@@ -67,23 +67,26 @@ if(isset($_GET['register'])) {
 
 if($showFormular) {
 ?>
+<div class="back_link">
+	<a href="index.php">Zurück</a>
+</div>
 <div class="form_outer">
 	<div class="form_inner">
 		<h2>Registrieren</h2>
 		<form action="?register=1" method="post">
-			<span>Vorname:</span><br>
+			<span>Vorname:</span>
 			<input type="surname" size="40" maxlength="250" name="surname"><br><br>
 
-			<span>Nachname:</span><br>
+			<span>Nachname:</span>
 			<input type="name" size="40" maxlength="250" name="name"><br><br>
 
-			<span>E-Mail:</span><br>
+			<span>E-Mail:</span>
 			<input type="email" size="40" maxlength="250" name="email"><br><br>
 
-			<span>Dein Passwort:</span><br>
+			<span>Dein Passwort:</span>
 			<input type="password" size="40"  maxlength="250" name="passwort"><br><br>
 
-			<span>Passwort wiederholen:</span><br>
+			<span>Passwort wiederholen:</span>
 			<input type="password" size="40" maxlength="250" name="passwort2"><br><br>
 
 			<input type="submit" value="Abschicken">

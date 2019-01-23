@@ -29,7 +29,9 @@ if(isset($_GET['login'])) {
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 </head>
 <body>
-
+<div class="back_link">
+	<a href="index.php">Zurück</a>
+</div>
 <div class="form_outer">
 	<div class="form_inner">
 		<h2>Anmelden</h2>

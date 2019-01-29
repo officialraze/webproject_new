@@ -79,7 +79,7 @@ if(isset($_POST['query'])) {
 					<?php } ?>
 					<?php if (isset($_SESSION['userid'])) { ?>
 						<li><a href="logout.php">Ausloggen</a></li>
-						<li><a href="dashboard.php">Dashboard</a></li>
+						<li><a href="dashboard/">Dashboard</a></li>
 					<?php } ?>
 				</ul>
 			</div>

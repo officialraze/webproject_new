@@ -1,6 +1,6 @@
 <?php
 session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
 
 if(isset($_GET['login'])) {
     $email = $_POST['email'];
@@ -13,7 +13,7 @@ if(isset($_GET['login'])) {
     //Überprüfung des Passworts
     if ($user !== false && password_verify($passwort, $user['passwort'])) {
         $_SESSION['userid'] = $user['id'];
-        die('Login erfolgreich. Weiter zu <a href="login_redirect.php">internen Bereich</a>');
+        die('Login erfolgreich. Weiter zum <a href="login_redirect.php">Dashboard</a>');
     } else {
         $errorMessage = "E-Mail oder Passwort war ungültig<br>";
     }

@@ -125,6 +125,38 @@ main {
 .title {
 	text-align: center;
 }
+.logged_in {
+	text-align: center;
+	font-weight: bold;
+}
+.login_form {
+	width: 180px;
+	margin: 0 auto;
+}
+.login_form ul {
+	margin: 0;
+}
+.login_form ul li {
+	float: left;
+	list-style-type: none;
+	margin-left: 20px;
+}
+.login_form ul li:first-child {
+	margin-left: 0;
+}
+
+.cf,
+.clear {
+	float: none;
+    clear: both;
+    line-height: 0;
+    width: 1px;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    height: 0;
+}
+
 
 .title__name,
 .title__sub {

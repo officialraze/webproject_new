@@ -1,6 +1,6 @@
 <?php
 session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
 ?>
 <!DOCTYPE html>
 <html>

@@ -2,11 +2,13 @@
 
 // session information
 session_start();
-$user_id = $_SESSION['userid'];
+if (isset($_SESSION['userid'])) {
+	$user_id = $_SESSION['userid'];
+}
 
-echo "<pre>";print_r($_SESSION);echo "</pre>";
+// echo "<pre>";print_r($_SESSION);echo "</pre>";
 // defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
 
 // query for everything
 $query = "SELECT * FROM `artist` artists
@@ -70,7 +72,6 @@ if(isset($_POST['query'])) {
 				</div>
 			</div>
 
-			<h1 class="site_title">Webprojekt</h1>
 			<div class="login_form">
 				<ul>
 					<?php if (!isset($_SESSION['userid'])) { ?>
@@ -81,8 +82,11 @@ if(isset($_POST['query'])) {
 						<li><a href="logout.php">Ausloggen</a></li>
 						<li><a href="dashboard/">Dashboard</a></li>
 					<?php } ?>
+					<div class="cf"></div>
 				</ul>
 			</div>
+
+			<h1 class="site_title">Webprojekt</h1>
 			<div id="morphsearch" class="morphsearch">
 				<form class="morphsearch-form" action="" method="POST">
 					<input class="morphsearch-input" name="query" type="text" placeholder="Suchen..."/>

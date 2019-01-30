@@ -7,5 +7,5 @@ if(!isset($_SESSION['userid'])) {
 //Abfrage der Nutzer ID vom Login
 $userid = $_SESSION['userid'];
 
-header("Location: index.php");
+header("Location: dashboard/index.php");
 ?>

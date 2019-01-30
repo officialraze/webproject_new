@@ -1,7 +1,26 @@
 <?php
 
+session_start();
+if (!isset($_SESSION['userid'])) {
+	if(!isset($_SESSION['userid'])) {
+	    die('Bitte zuerst <a href="../login.php">einloggen</a>');
+	}
+}
+
+if (isset($_SESSION['userid'])) {
+	$user_id = $_SESSION['userid'];
+}
+
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+
+$band_query = "SELECT * FROM `artist` artists
+INNER JOIN `description` infos ON infos.artist_id = artists.id
+WHERE `id` = $user_id";
+
+// echo "<pre>";print_r($_SESSION);echo "</pre>";
+
 // defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
 
 ?>
 
@@ -20,7 +39,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
   <!-- inject:css -->
   <link rel="stylesheet" href="css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="../favicon.ico" />
   <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
 
 </head>
@@ -37,11 +56,21 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               <div class="nav-profile-img">
-                <img src="../img/artist/round/razeexe.jpg" alt="image">
+				  <img src="../img/artist/round/<?php
+  					foreach ($pdo->query($band_query) as $row) {
+  						echo $row['images'];
+  					}
+  				?>.jpg" alt="image">
                 <span class="availability-status online"></span>
               </div>
               <div class="nav-profile-text">
-                <p class="mb-1 text-black">raze.exe</p>
+                <p class="mb-1 text-black">
+					<?php
+						foreach ($pdo->query($band_query) as $row) {
+							echo $row['artist_name'];
+						}
+					?>
+				</p>
               </div>
             </a>
             <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -81,12 +110,22 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
           <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
               <div class="nav-profile-image">
-                <img src="images/faces/face1.jpg" alt="profile">
+                <img src="../img/artist/round/<?php
+					foreach ($pdo->query($band_query) as $row) {
+						echo $row['images'];
+					}
+				?>.jpg" alt="profile">
                 <span class="login-status online"></span> <!--change to offline or busy as needed-->
               </div>
               <div class="nav-profile-text d-flex flex-column">
-                <span class="font-weight-bold mb-2">David Grey. H</span>
-                <span class="text-secondary text-small">Project Manager</span>
+                <span class="font-weight-bold mb-2">
+					<?php
+						foreach ($pdo->query($band_query) as $row) {
+							echo $row['artist_name'];
+						}
+					?>
+				</span>
+                <span class="text-secondary text-small">Künstler</span>
               </div>
               <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
             </a>
@@ -177,7 +216,11 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
               <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <a href="" style="color: #fff;"><i class="mdi mdi-home"></i></a>
               </span>
-              Dashboard von raze.exe
+              Dashboard von <?php
+				  foreach ($pdo->query($band_query) as $row) {
+					  echo $row['artist_name'];
+				  }
+			  ?>
             </h3>
             <nav aria-label="breadcrumb">
               <ul class="breadcrumb">
@@ -196,8 +239,8 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
                   <h4 class="font-weight-normal mb-3">Umsatz
                     <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">$ 15,0000</h2>
-                  <h6 class="card-text">Increased by 60%</h6>
+                  <h2 class="mb-5">$50</h2>
+                  <h6 class="card-text">Erhöht um 4%</h6>
                 </div>
               </div>
             </div>
@@ -208,8 +251,8 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
                   <h4 class="font-weight-normal mb-3">Wöchentliche Plays
                     <i class="mdi mdi-music-note mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">45,6334</h2>
-                  <h6 class="card-text">Decreased by 10%</h6>
+                  <h2 class="mb-5">300</h2>
+                  <h6 class="card-text">Gesunken um 3%</h6>
                 </div>
               </div>
             </div>
@@ -220,8 +263,8 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
                   <h4 class="font-weight-normal mb-3">Monatliche Zuhörer
                     <i class="mdi mdi-headphones mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">95,5741</h2>
-                  <h6 class="card-text">Increased by 5%</h6>
+                  <h2 class="mb-5">3'400</h2>
+                  <h6 class="card-text">Gesunken um 8%</h6>
                 </div>
               </div>
             </div>
@@ -230,8 +273,23 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
             <div class="col-md-7 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h4 class="card-title">Text anpassen</h4>
-						<textarea name="content" id="editor">Hier könnte etwas sehr Spannendes stehen.</textarea>
+						<h4 class="card-title">Biographie anpassen</h4>
+						<textarea name="content" id="editor"><?php
+							// description in ckeditor
+							foreach ($pdo->query($band_query) as $row) {
+		  					  echo utf8_encode($row['description']);
+		  				  }
+						?></textarea>
+						<br>
+						<h4 class="card-title">Zitat anpassen</h4>
+						<textarea name="content" id="editor_quote"><?php
+							// description in ckeditor
+							foreach ($pdo->query($band_query) as $row) {
+		  					  echo $row['quote'];
+		  				  }
+						?></textarea>
+						<br>
+						<button type="button" class="btn btn-gradient-success btn-fw">Speichern</button>
 					</div>
 				</div>
             </div>
@@ -283,7 +341,6 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><strong><?php echo date('Y'); ?></strong> © by Melvin Lauber</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
           </div>
         </footer>
         <!-- partial -->
@@ -314,6 +371,12 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
         .catch( error => {
             console.error( error );
         } );
+
+	ClassicEditor
+        .create( document.querySelector( '#editor_quote' ) )
+        .catch( error => {
+            console.error( error );
+	        } );
 </script>
 </body>
 

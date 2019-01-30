@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.8.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Erstellungszeit: 09. Dez 2018 um 14:21
--- Server-Version: 5.6.34-log
--- PHP-Version: 7.1.5
+-- Host: 127.0.0.1
+-- Erstellungszeit: 30. Jan 2019 um 16:51
+-- Server-Version: 10.1.33-MariaDB
+-- PHP-Version: 7.2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `artists`
 --
+DROP DATABASE IF EXISTS `artists`;
+CREATE DATABASE IF NOT EXISTS `artists` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `artists`;
 
 -- --------------------------------------------------------
 
@@ -98,6 +101,29 @@ INSERT INTO `description` (`artist_id`, `description`, `quote`) VALUES
 (17, 'Van Dijck schloss sein Studium in Musikproduktion am Rotterdams Conservatorium 2012 ab.\n\nAb 2013 veröffentlichte er seine Musik unter dem Pseudonym San Holo und erregte erste Aufmerksamkeit, als er von Heroic Recordings unter Vertrag gestellt wurde. Seine erste EP, Cosmos, wurde am 18. September 2014 veröffentlicht und erreichte die Top 100 der Elektronik-Charts bei iTunes.\n\nSeit September 2014 befindet er sich in einer rechtlichen Auseinandersetzung mit Walt Disney Pictures. Ihm wird vorgeworfen, sein Künstlername San Holo ähnele zu sehr dem des \"Han Solo\" aus der „Krieg der Sterne“-Reihe.\n\nEr veröffentlichte diverse Singles und Remixe bei Spinnin’ Records, Monstercat, OWSLA und in seinem eigenem Label Bitbird.\n\nAm 20. September 2018 erschien sein erstes Album mit dem Titel album1.', 'Light'),
 (18, '', 'You go me on the cookie');
 
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `passwort` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `vorname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `nachname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Daten für Tabelle `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `passwort`, `vorname`, `nachname`, `created_at`, `updated_at`) VALUES
+(1, 'porterrobinson@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Porter', 'Robinson', '2019-01-30 15:42:15', NULL);
+
 --
 -- Indizes der exportierten Tabellen
 --
@@ -109,6 +135,13 @@ ALTER TABLE `artist`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indizes für die Tabelle `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- AUTO_INCREMENT für exportierte Tabellen
 --
 
@@ -116,7 +149,14 @@ ALTER TABLE `artist`
 -- AUTO_INCREMENT für Tabelle `artist`
 --
 ALTER TABLE `artist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT für Tabelle `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

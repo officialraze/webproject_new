@@ -8,7 +8,7 @@ if (isset($_SESSION['userid'])) {
 
 // echo "<pre>";print_r($_SESSION);echo "</pre>";
 // defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 
 // query for everything
 $query = "SELECT * FROM `artist` artists

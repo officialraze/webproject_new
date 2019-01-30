@@ -11,7 +11,7 @@ if (isset($_SESSION['userid'])) {
 	$user_id = $_SESSION['userid'];
 }
 
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 
 $band_query = "SELECT * FROM `artist` artists
 INNER JOIN `description` infos ON infos.artist_id = artists.id

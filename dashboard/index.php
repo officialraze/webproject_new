@@ -17,10 +17,8 @@ $band_query = "SELECT * FROM `artist` artists
 INNER JOIN `description` infos ON infos.artist_id = artists.id
 WHERE `id` = $user_id";
 
-// echo "<pre>";print_r($_SESSION);echo "</pre>";
-
 // defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 
 ?>
 

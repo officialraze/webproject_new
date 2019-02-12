@@ -1,14 +1,21 @@
 <?php
 
+require 'config.php';
+
 // session information
 session_start();
 if (isset($_SESSION['userid'])) {
 	$user_id = $_SESSION['userid'];
 }
 
-// echo "<pre>";print_r($_SESSION);echo "</pre>";
 // defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+if (DEVELOP == true) {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+}
+else {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+}
+
 
 // query for everything
 $query = "SELECT * FROM `artist` artists

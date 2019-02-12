@@ -1,6 +1,14 @@
 <?php
+
+require 'config.php';
+
 session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+if (DEVELOP == true) {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+}
+else {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+}
 ?>
 <!DOCTYPE html>
 <html>

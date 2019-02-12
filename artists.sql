@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 30. Jan 2019 um 16:51
--- Server-Version: 10.1.33-MariaDB
--- PHP-Version: 7.2.6
+-- Host: localhost:3306
+-- Erstellungszeit: 12. Feb 2019 um 19:39
+-- Server-Version: 5.6.34-log
+-- PHP-Version: 7.1.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,7 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `artists`
 --
-DROP DATABASE IF EXISTS `artists`;
 CREATE DATABASE IF NOT EXISTS `artists` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `artists`;
 
@@ -31,6 +30,7 @@ USE `artists`;
 -- Tabellenstruktur für Tabelle `artist`
 --
 
+DROP TABLE IF EXISTS `artist`;
 CREATE TABLE `artist` (
   `id` int(11) NOT NULL,
   `artist_name` varchar(15) DEFAULT NULL,
@@ -71,6 +71,7 @@ INSERT INTO `artist` (`id`, `artist_name`, `genre`, `age`, `popular_song`, `list
 -- Tabellenstruktur für Tabelle `description`
 --
 
+DROP TABLE IF EXISTS `description`;
 CREATE TABLE `description` (
   `artist_id` int(11) NOT NULL,
   `description` text NOT NULL,
@@ -104,9 +105,48 @@ INSERT INTO `description` (`artist_id`, `description`, `quote`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `stats`
+--
+
+DROP TABLE IF EXISTS `stats`;
+CREATE TABLE `stats` (
+  `artist_id` int(11) NOT NULL,
+  `sales` int(11) NOT NULL,
+  `plays` int(11) NOT NULL,
+  `listeners` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Daten für Tabelle `stats`
+--
+
+INSERT INTO `stats` (`artist_id`, `sales`, `plays`, `listeners`) VALUES
+(1, 883, 220700, 124000),
+(2, 398, 99500, 55000),
+(3, 208, 52000, 23000),
+(4, 9200, 2300000, 1350000),
+(5, 23080, 5770000, 3710000),
+(6, 145, 35900, 18100),
+(7, 158, 39400, 25500),
+(8, 40000, 10000000, 4900000),
+(9, 124, 31000, 16000),
+(10, 1500, 370000, 238000),
+(11, 258, 64400, 37500),
+(12, 14000, 3500000, 1800000),
+(13, 645, 161000, 100000),
+(14, 832, 208000, 102000),
+(15, 66, 16600, 11400),
+(16, 90, 22500, 18800),
+(17, 1827, 456800, 255000),
+(18, 1, 348, 340);
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -122,7 +162,24 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `passwort`, `vorname`, `nachname`, `created_at`, `updated_at`) VALUES
-(1, 'porterrobinson@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Porter', 'Robinson', '2019-01-30 15:42:15', NULL);
+(1, 'porterrobinson@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Porter', 'Robinson', '2019-01-30 15:42:15', NULL),
+(2, 'virtualriot@gmail.com', '$2y$10$ZmbB6qQ.DDwblflZ2NFWZOSee4XPH39Gz9JCwze9xnirgmjqO40S6', 'Virtual', 'Riot', '2019-02-12 19:04:05', NULL),
+(3, 'pandaeyes@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Panda', 'Eyes', '2019-02-12 19:10:45', NULL),
+(4, 'skrillex@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Skrillex', '', '2019-02-12 19:11:23', NULL),
+(5, 'diplo@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Diplo', '', '2019-02-12 19:12:23', NULL),
+(6, 'haywyre@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Haywyre', '', '2019-02-12 19:12:23', NULL),
+(7, 'barelyalive@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Barely', 'Alive', '2019-02-12 19:13:10', NULL),
+(8, 'marshmello@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Marshmello', '', '2019-02-12 19:13:10', NULL),
+(9, 'tokyomachine@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Tokyo', 'Machine', '2019-02-12 19:15:25', NULL),
+(10, 'slushii@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Slushii', '', '2019-02-12 19:15:25', NULL),
+(11, 'foxstevenson@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Fox', 'Stevenson', '2019-02-12 19:15:25', NULL),
+(12, 'avicii@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Avicii', '', '2019-02-12 19:15:25', NULL),
+(13, 'madeon@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Madeon', '', '2019-02-12 19:15:25', NULL),
+(14, 'excision@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Excision', '', '2019-02-12 19:17:28', NULL),
+(15, 'rayvolpe@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Ray', 'Volpe', '2019-02-12 19:17:28', NULL),
+(16, 'eliminate@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Eliminate', '', '2019-02-12 19:17:28', NULL),
+(17, 'sanholo@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'San', 'Holo', '2019-02-12 19:17:28', NULL),
+(18, 'razeexe@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Raze.Exe', '', '2019-02-12 19:17:28', NULL);
 
 --
 -- Indizes der exportierten Tabellen
@@ -133,6 +190,12 @@ INSERT INTO `users` (`id`, `email`, `passwort`, `vorname`, `nachname`, `created_
 --
 ALTER TABLE `artist`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `stats`
+--
+ALTER TABLE `stats`
+  ADD PRIMARY KEY (`artist_id`);
 
 --
 -- Indizes für die Tabelle `users`
@@ -150,13 +213,16 @@ ALTER TABLE `users`
 --
 ALTER TABLE `artist`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
+--
+-- AUTO_INCREMENT für Tabelle `stats`
+--
+ALTER TABLE `stats`
+  MODIFY `artist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

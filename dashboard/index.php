@@ -1,5 +1,7 @@
 <?php
 
+require '../config.php';
+
 session_start();
 if (!isset($_SESSION['userid'])) {
 	if(!isset($_SESSION['userid'])) {
@@ -11,14 +13,20 @@ if (isset($_SESSION['userid'])) {
 	$user_id = $_SESSION['userid'];
 }
 
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+if (DEVELOP == true) {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+}
+else {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+}
 
 $band_query = "SELECT * FROM `artist` artists
 INNER JOIN `description` infos ON infos.artist_id = artists.id
 WHERE `id` = $user_id";
 
-// defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+$stats_query = "SELECT * FROM `artist` artists
+INNER JOIN `stats` stats ON stats.artist_id = artists.id
+WHERE `id` = $user_id";
 
 ?>
 
@@ -234,10 +242,16 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
               <div class="card bg-gradient-danger card-img-holder text-white">
                 <div class="card-body">
                   <img src="images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image"/>
-                  <h4 class="font-weight-normal mb-3">Umsatz
+                  <h4 class="font-weight-normal mb-3">Umsatz (letzte 7 Tage)
                     <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">$50</h2>
+                  <h2 class="mb-5">
+					<?php
+						foreach ($pdo->query($stats_query) as $row) {
+							echo '$'.$row['sales'];
+						}
+					?>
+                  </h2>
                   <h6 class="card-text">Erhöht um 4%</h6>
                 </div>
               </div>
@@ -249,7 +263,13 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
                   <h4 class="font-weight-normal mb-3">Wöchentliche Plays
                     <i class="mdi mdi-music-note mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">300</h2>
+                  <h2 class="mb-5">
+				  	<?php
+						foreach ($pdo->query($stats_query) as $row) {
+							echo $row['plays'];
+						}
+					?>
+                  </h2>
                   <h6 class="card-text">Gesunken um 3%</h6>
                 </div>
               </div>
@@ -261,7 +281,13 @@ $pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
                   <h4 class="font-weight-normal mb-3">Monatliche Zuhörer
                     <i class="mdi mdi-headphones mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">3'400</h2>
+                  <h2 class="mb-5">
+					  <?php
+  						foreach ($pdo->query($stats_query) as $row) {
+  							echo $row['listeners'];
+  						}
+  					?>
+                  </h2>
                   <h6 class="card-text">Gesunken um 8%</h6>
                 </div>
               </div>

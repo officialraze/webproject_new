@@ -1,14 +1,21 @@
 <?php
 
+require 'config.php';
+
 // session information
 session_start();
 if (isset($_SESSION['userid'])) {
 	$user_id = $_SESSION['userid'];
 }
 
-// echo "<pre>";print_r($_SESSION);echo "</pre>";
 // defenitions
-$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+if (DEVELOP == true) {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+}
+else {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+}
+
 
 // query for everything
 $query = "SELECT * FROM `artist` artists
@@ -59,6 +66,7 @@ if(isset($_POST['query'])) {
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/foundation.min.js"></script>
 		<script type="text/javascript" src="js/functions.js"></script>
+		<script src="js/jquery.sticky.js"></script>
 
 		<!-- Include Amplitude JS -->
 		<script type="text/javascript" src="js/amplitude.js"></script>
@@ -69,6 +77,16 @@ if(isset($_POST['query'])) {
 			<div class="frame">
 				<div class="title">
 					<h3 class="title__name"><a href=""><img src="img/logo.png" width="60" alt="Logo"></a></h3>
+				</div>
+				<div id="morphsearch" class="morphsearch">
+					<form class="morphsearch-form" action="" method="POST">
+						<input class="morphsearch-input" name="query" type="text" placeholder="Suchen..."/>
+						<input style="display: none;"type="submit" name="" value="">
+						<button class="morphsearch-submit" type="submit">Suche</button>
+					</form>
+					<div class="morphsearch-content">
+					</div><!-- /morphsearch-content -->
+					<span class="morphsearch-close"></span>
 				</div>
 			</div>
 
@@ -87,16 +105,6 @@ if(isset($_POST['query'])) {
 			</div>
 
 			<h1 class="site_title">Webprojekt</h1>
-			<div id="morphsearch" class="morphsearch">
-				<form class="morphsearch-form" action="" method="POST">
-					<input class="morphsearch-input" name="query" type="text" placeholder="Suchen..."/>
-					<input style="display: none;"type="submit" name="" value="">
-					<button class="morphsearch-submit" type="submit">Suche</button>
-				</form>
-				<div class="morphsearch-content">
-				</div><!-- /morphsearch-content -->
-				<span class="morphsearch-close"></span>
-			</div>
 			<div class="logged_in">
 				<?php
 
@@ -307,6 +315,9 @@ if(isset($_POST['query'])) {
 				// make button not clickable (search icon)
 				morphSearch.querySelector( 'button[type="submit"]' ).addEventListener( 'click', function(ev) { ev.preventDefault(); } );
 			})();
+		</script>
+		<script>
+			$(".frame").sticky({ topSpacing: 0 });
 		</script>
 	</body>
 </html>

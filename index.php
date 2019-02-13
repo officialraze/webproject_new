@@ -9,7 +9,7 @@ if (isset($_SESSION['userid'])) {
 }
 
 // defenitions
-if (DEVELOP == true) {
+if (HOME == true) {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 }
 else {
@@ -50,6 +50,8 @@ if(isset($_POST['query'])) {
 		<link rel="stylesheet" type="text/css" href="css/base.css" />
 		<link rel="stylesheet" type="text/css" href="css/foundation.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/app.css"/>
+		<!-- AniCollection.css library -->
+    <link rel="stylesheet" href="http://anijs.github.io/lib/anicollection/anicollection.css">
 
 		<!-- js for player -->
 		<script type="text/javascript" src="js/jquery.js"></script>
@@ -67,6 +69,8 @@ if(isset($_POST['query'])) {
 		<script type="text/javascript" src="js/foundation.min.js"></script>
 		<script type="text/javascript" src="js/functions.js"></script>
 		<script src="js/jquery.sticky.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css" />
+		<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
 
 		<!-- Include Amplitude JS -->
 		<script type="text/javascript" src="js/amplitude.js"></script>
@@ -133,10 +137,9 @@ if(isset($_POST['query'])) {
 			?>
 			<div class="login_success">
 				<?php
-					// if(isset($_SESSION['userid'])) {
-					// 	die('Bitte zuerst <a href="login.php">einloggen</a>');
-					// }
-
+					if(!isset($_SESSION['userid']) && !empty($_SESSION['userid'])) {
+						die('Bitte zuerst <a href="login.php">einloggen</a>');
+					}
 				?>
 			</div>
 			<div class="grid-wrap">
@@ -187,7 +190,7 @@ if(isset($_POST['query'])) {
 					else if(empty($search)){
 						foreach ($pdo->query($query) as $row) {
 							// give out grid item / all artists
-							echo '<a href="#" class="grid__item">';
+							echo '<a href="#" data-anijs="if: scroll, on: window, do: bounceIn animated, before: scrollReveal" class="grid__item">';
 								echo '<div class="grid__item-bg"></div>';
 								echo '<div class="grid__item-wrap">';
 									echo '<img class="grid__item-img" src="img/artist/'.$row['images'].'.jpg" alt="'.$row['artist_name'].'" />';
@@ -244,7 +247,9 @@ if(isset($_POST['query'])) {
 						// give out detail page
 						echo '<div class="content__item">';
 							echo '<div class="content__item-intro">';
-								echo '<img class="content__item-img" src="img/artist/'.$row['images'].'.jpg" alt="Some image" />';
+								echo '<img data-fancybox="gallery_'.$row['artist_name'].'" href="img/artist/'.$row['images'].'.jpg" class="content__item-img" src="img/artist/'.$row['images'].'.jpg" alt="Some image" />';
+								echo '<img data-fancybox="gallery_'.$row['artist_name'].'" href="img/artist/'.$row['images'].'_2.jpg" class="content__item-img" src="img/artist/'.$row['images'].'.jpg" alt="Some image" />';
+								echo '<img data-fancybox="gallery_'.$row['artist_name'].'" href="img/artist/'.$row['images'].'_3.jpg" class="content__item-img" src="img/artist/'.$row['images'].'.jpg" alt="Some image" />';
 								echo '<h2 class="content__item-title">'.$row['artist_name'].'</h2>';
 							echo '</div>';
 							echo '<h3 class="content__item-subtitle">'.$row['quote'].'</h3>';
@@ -319,5 +324,10 @@ if(isset($_POST['query'])) {
 		<script>
 			$(".frame").sticky({ topSpacing: 0 });
 		</script>
+
+		<!-- AniJS Core File -->
+    <script src="js/anijs-min.js"></script>
+    <!-- ScrollReveal Helper -->
+    <script src="js/anijs-helper-scrollreveal-min.js"></script>
 	</body>
 </html>

@@ -2,7 +2,7 @@
 
 require 'config.php';
 session_start();
-if (DEVELOP == true) {
+if (HOME == true) {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 }
 else {

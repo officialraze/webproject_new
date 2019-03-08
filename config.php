@@ -1,6 +1,6 @@
 <?php
 
 // definitions
-define(DEVELOP, true);
+define("HOME", false);
 
 ?>

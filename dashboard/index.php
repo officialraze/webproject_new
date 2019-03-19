@@ -233,22 +233,48 @@ WHERE `id` = $user_id";
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title">Biographie anpassen</h4>
-						<textarea name="content" id="editor"><?php
-							// description in ckeditor
-							foreach ($pdo->query($band_query) as $row) {
-		  					  echo utf8_encode($row['description']);
-		  				  }
-						?></textarea>
-						<br>
-						<h4 class="card-title">Zitat anpassen</h4>
-						<textarea name="content" id="editor_quote"><?php
-							// description in ckeditor
-							foreach ($pdo->query($band_query) as $row) {
-		  					  echo $row['quote'];
-		  				  }
-						?></textarea>
-						<br>
-						<button type="button" class="btn btn-gradient-success btn-fw">Speichern</button>
+						<form class="content_artist" action="index.php" method="post">
+							<textarea label=""name="content_description"><?php
+								// description in ckeditor
+								foreach ($pdo->query($band_query) as $row) {
+			  					  echo utf8_encode($row['description']);
+			  				  }
+							?></textarea>
+							<br>
+							<h4 class="card-title">Zitat anpassen</h4>
+							<textarea name="content_quote"><?php
+								// description in ckeditor
+								foreach ($pdo->query($band_query) as $row) {
+			  					  echo $row['quote'];
+			  				  }
+							?></textarea>
+							<br>
+							<input type="submit" name="save" value="Speichern">
+							<!-- <button type="submit" class="btn btn-gradient-success btn-fw">Speichern</button> -->
+
+							<?php
+
+								$content_description = $_POST['content_description'];
+								$content_quote = $_POST['content_quote'];
+
+								// save into database
+								if (!empty($_POST)) {
+									$statement = $pdo->prepare("INSERT INTO `description` (description, quote) VALUES (?, ?) WHERE `artist_id` = $user_id");
+									$statement->execute(array($content_description, $content_quote));
+									// echo "<pre>";print_r($statement);echo "</pre>";
+									// echo "<pre>";print_r($user_id);echo "</pre>";
+
+									// check if everything worked
+									if ($statement == true) {
+										echo "Die Daten wurden erfolgreich hinzugefügt!";
+									}
+									else {
+										echo "Beim Einfügen der Daten ist ein Fehler aufgetreten";
+									}
+								}
+							 ?>
+
+						</form>
 					</div>
 				</div>
             </div>

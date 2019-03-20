@@ -15,9 +15,17 @@ if (isset($_SESSION['userid'])) {
 
 if (HOME == true) {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+	$servername = "localhost";
+	$username = "root";
+	$password = "root";
+	$dbname = "artists";
 }
 else {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "artists";
 }
 
 $band_query = "SELECT * FROM `artist` artists
@@ -234,14 +242,18 @@ WHERE `id` = $user_id";
 					<div class="card-body">
 						<h4 class="card-title">Biographie anpassen</h4>
 						<form class="content_artist" action="index.php" method="post">
-							<textarea label=""name="content_description"><?php
+							<textarea name="content_description">
+								<?php
 								// description in ckeditor
 								foreach ($pdo->query($band_query) as $row) {
-			  					  echo utf8_encode($row['description']);
-			  				  }
-							?></textarea>
+			  					  echo $row['description'];
+				  				  }
+								?>
+							</textarea>
 							<br>
+
 							<h4 class="card-title">Zitat anpassen</h4>
+
 							<textarea name="content_quote"><?php
 								// description in ckeditor
 								foreach ($pdo->query($band_query) as $row) {
@@ -249,32 +261,40 @@ WHERE `id` = $user_id";
 			  				  }
 							?></textarea>
 							<br>
+
 							<input type="submit" name="save" value="Speichern">
-							<!-- <button type="submit" class="btn btn-gradient-success btn-fw">Speichern</button> -->
+						</form>
 
-							<?php
+						<?php
 
+							if(!empty($_POST) || !empty($_POST['content_description']) || !empty($_POST['content_quote'])) {
 								$content_description = $_POST['content_description'];
 								$content_quote = $_POST['content_quote'];
+							}
 
-								// save into database
-								if (!empty($_POST)) {
-									$statement = $pdo->prepare("INSERT INTO `description` (description, quote) VALUES (?, ?) WHERE `artist_id` = $user_id");
-									$statement->execute(array($content_description, $content_quote));
-									// echo "<pre>";print_r($statement);echo "</pre>";
-									// echo "<pre>";print_r($user_id);echo "</pre>";
+							// Create connection
+							$conn = new mysqli($servername, $username, $password, $dbname);
+							// Check connection
+							if ($conn->connect_error) {
+							    die("Connection failed: " . $conn->connect_error);
+							}
 
-									// check if everything worked
-									if ($statement == true) {
-										echo "Die Daten wurden erfolgreich hinzugefügt!";
-									}
-									else {
-										echo "Beim Einfügen der Daten ist ein Fehler aufgetreten";
-									}
+							if (!empty($_POST)) {
+								$sql = "UPDATE `description`
+										SET `description`= '".$content_description."', `quote`= '".$content_quote."'
+										WHERE `artist_id`= '".$user_id."'";
+
+								if ($conn->query($sql) === TRUE) {
+								    echo "Record updated successfully";
 								}
-							 ?>
+								else {
+								    echo "Error updating record: " . $conn->error;
+								}
+							}
 
-						</form>
+							$conn->close();
+						 ?>
+
 					</div>
 				</div>
             </div>

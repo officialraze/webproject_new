@@ -242,7 +242,7 @@ WHERE `id` = $user_id";
 					<div class="card-body">
 						<h4 class="card-title">Biographie anpassen</h4>
 						<form class="content_artist" action="index.php" method="post">
-							<textarea name="content_description">
+							<textarea name="content_description" id="editor">
 								<?php
 								// description in ckeditor
 								foreach ($pdo->query($band_query) as $row) {
@@ -254,7 +254,7 @@ WHERE `id` = $user_id";
 
 							<h4 class="card-title">Zitat anpassen</h4>
 
-							<textarea name="content_quote"><?php
+							<textarea name="content_quote" id="editor_quote"><?php
 								// description in ckeditor
 								foreach ($pdo->query($band_query) as $row) {
 			  					  echo $row['quote'];
@@ -285,10 +285,11 @@ WHERE `id` = $user_id";
 										WHERE `artist_id`= '".$user_id."'";
 
 								if ($conn->query($sql) === TRUE) {
-								    echo "Record updated successfully";
+								    echo "Daten wurden erfolgreich aktualisiert";
+									header("Refresh:0");
 								}
 								else {
-								    echo "Error updating record: " . $conn->error;
+								    echo "Fehler beim Aktualisieren der Daten: " . $conn->error;
 								}
 							}
 

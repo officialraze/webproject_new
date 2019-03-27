@@ -241,7 +241,7 @@ WHERE `id` = $user_id";
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title">Biographie anpassen</h4>
-						<form class="content_artist" action="index.php" method="post">
+						<form onsubmit="setTimeout(function () { window.location.reload(); }, 10)" class="content_artist" action="index.php" method="post">
 							<textarea name="content_description" id="editor">
 								<?php
 								// description in ckeditor
@@ -262,7 +262,7 @@ WHERE `id` = $user_id";
 							?></textarea>
 							<br>
 
-							<input type="submit" name="save" value="Speichern">
+							<input class="submitter" type="submit" name="save" value="Speichern">
 						</form>
 
 						<?php
@@ -286,7 +286,7 @@ WHERE `id` = $user_id";
 
 								if ($conn->query($sql) === TRUE) {
 								    echo "Daten wurden erfolgreich aktualisiert";
-									header("Refresh:0");
+										// header("Refresh:0");
 								}
 								else {
 								    echo "Fehler beim Aktualisieren der Daten: " . $conn->error;
@@ -370,6 +370,7 @@ WHERE `id` = $user_id";
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
+
 
   <script>
     ClassicEditor

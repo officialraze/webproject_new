@@ -237,6 +237,9 @@ if(isset($_POST['query'])) {
 							echo '<h3 class="content__item-listeners"><i class="fab fa-spotify"></i>'.$row['listeners'].'</h3>';
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
 							echo "</div>";
+							?>
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<?php
 					}
 
 				}
@@ -255,6 +258,9 @@ if(isset($_POST['query'])) {
 							echo '<h3 class="content__item-subtitle">'.$row['quote'].'</h3>';
 							echo '<h3 class="content__item-listeners"><i class="fab fa-spotify"></i> '.$row['listeners'].'</h3>';
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
+							?>
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<?php
 				?>
 
 				<?php echo "</div>"; } } ?>

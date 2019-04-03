@@ -262,7 +262,7 @@ WHERE `id` = $user_id";
 							?></textarea>
 							<br>
 
-							<input class="submitter" type="submit" name="save" value="Speichern">
+							<input class="btn" type="submit" name="save" value="Speichern">
 						</form>
 
 						<?php
@@ -302,12 +302,18 @@ WHERE `id` = $user_id";
             <div class="col-md-5 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tourdaten</h4>
-				  <ul class="list-arrow">
-				  	<li><span class="date">16.03.2019</span> - <span class="place">Brig, Schweiz</span></li>
-						<li><span class="date">26.03.2019</span> - <span class="place">Bern, Schweiz</span></li>
-						<li><span class="date">11.04.2019</span> - <span class="place">Zürich, Schweiz</span></li>
-				  </ul>
+                  <h4 class="card-title">Youtube Video</h4>
+				  <div class="youtube_iframe">
+					  <?php
+						$url = "https://www.youtube.com/watch?v=eTUizYzQOWk";
+						parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
+					  ?>
+					  <iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $my_array_of_vars['v']; ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				  </div>
+				  <form class="youtube_url" action="index.php" method="post">
+					  <input id="editor_youtube" type="text" name="url" value="URL einfügen"><br>
+					  <input class="btn" type="submit" name="submitter" value="Speichern">
+				  </form>
                 </div>
               </div>
             </div>
@@ -381,6 +387,12 @@ WHERE `id` = $user_id";
 
 	ClassicEditor
         .create( document.querySelector( '#editor_quote' ) )
+        .catch( error => {
+            console.error( error );
+	        } );
+
+	ClassicEditor
+        .create( document.querySelector( '#editor_youtube' ) )
         .catch( error => {
             console.error( error );
 	        } );

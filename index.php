@@ -238,7 +238,11 @@ if(isset($_POST['query'])) {
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
 							echo "</div>";
 							?>
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<h1 class="youtube_title">Newest Video</h1>
+							<div class="youtube_iframe">
+								<h1>Newest Video</h1>
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							</div>
 							<?php
 					}
 
@@ -259,7 +263,10 @@ if(isset($_POST['query'])) {
 							echo '<h3 class="content__item-listeners"><i class="fab fa-spotify"></i> '.$row['listeners'].'</h3>';
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
 							?>
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<h1 class="youtube_title">Newest Video</h1>
+							<div class="youtube_iframe">
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							</div>
 							<?php
 				?>
 

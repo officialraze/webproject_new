@@ -138,6 +138,11 @@ main {
 	width: 180px;
 	margin: 0 auto;
 }
+.form_inner h2,
+.form_inner .login_success_title,
+.form_inner p {
+	color: #000;
+}
 .login_form ul {
 	margin: 0;
 }
@@ -471,6 +476,9 @@ main {
 }
 
 /* youtube_iframe */
+h1.youtube_title {
+	margin-top: 85px;
+}
 div.youtube_iframe {
 	position: relative;
 	height: 0;

@@ -1,22 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 03. Apr 2019 um 15:00
--- Server-Version: 10.1.33-MariaDB
--- PHP-Version: 7.2.6
+-- Host: localhost:3306
+-- Erstellungszeit: 11. Apr 2019 um 08:01
+-- Server-Version: 5.7.23
+-- PHP-Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Datenbank: `artists`
@@ -106,6 +98,23 @@ INSERT INTO `description` (`artist_id`, `description`, `quote`, `url`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `events`
+--
+
+CREATE TABLE IF NOT EXISTS `events` (
+  `id` int(11) NOT NULL,
+  `artist_id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `start_date` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `end_date` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=Active, 0=Block'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `stats`
 --
 
@@ -182,8 +191,3 @@ INSERT INTO `users` (`id`, `email`, `passwort`, `vorname`, `nachname`, `created_
 (16, 'eliminate@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Eliminate', '', '2019-02-12 19:17:28', NULL),
 (17, 'sanholo@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'San', 'Holo', '2019-02-12 19:17:28', NULL),
 (18, 'razeexe@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Raze.Exe', '', '2019-02-12 19:17:28', NULL);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

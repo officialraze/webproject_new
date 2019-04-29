@@ -66,12 +66,21 @@ if(isset($_POST['query'])) {
 		<link href='http://fonts.googleapis.com/css?family=Raleway:100,700,800' rel='stylesheet' type='text/css'>
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
+		<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+	    <link rel="stylesheet" href="https://unpkg.com/tippy.js@4/themes/light-border.css">
+	  	<link rel="stylesheet" href="https://unpkg.com/tippy.js@4/themes/translucent.css">
+		<link rel="stylesheet" href="css/calendar.css">
+
+	    <script src="https://unpkg.com/popper.js@1/dist/umd/popper.min.js"></script>
+	    <script src="https://unpkg.com/tippy.js@4"></script>
+
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/foundation.min.js"></script>
 		<script type="text/javascript" src="js/functions.js"></script>
 		<script src="js/jquery.sticky.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css" />
 		<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
+		<script src="js/calendar.js"></script>
 
 		<!-- Include Amplitude JS -->
 		<script type="text/javascript" src="js/amplitude.js"></script>
@@ -268,6 +277,9 @@ if(isset($_POST['query'])) {
 								<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							</div>
 							<?php
+
+							include 'calendar.php';
+
 				?>
 
 				<?php echo "</div>"; } } ?>

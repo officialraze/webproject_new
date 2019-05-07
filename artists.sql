@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Erstellungszeit: 11. Apr 2019 um 08:01
+-- Erstellungszeit: 07. Mai 2019 um 12:43
 -- Server-Version: 5.7.23
 -- PHP-Version: 7.2.10
 
@@ -23,16 +23,15 @@ USE `artists`;
 -- Tabellenstruktur für Tabelle `artist`
 --
 
-CREATE TABLE IF NOT EXISTS `artist` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `artist` (
+  `id` int(11) NOT NULL,
   `artist_name` varchar(15) DEFAULT NULL,
   `genre` varchar(18) DEFAULT NULL,
   `age` varchar(9) DEFAULT NULL,
   `popular_song` varchar(21) DEFAULT NULL,
   `listeners` varchar(10) DEFAULT NULL,
-  `images` varchar(14) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+  `images` varchar(14) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `artist`
@@ -64,7 +63,7 @@ INSERT INTO `artist` (`id`, `artist_name`, `genre`, `age`, `popular_song`, `list
 -- Tabellenstruktur für Tabelle `description`
 --
 
-CREATE TABLE IF NOT EXISTS `description` (
+CREATE TABLE `description` (
   `artist_id` int(11) NOT NULL,
   `description` text NOT NULL,
   `quote` text,
@@ -101,15 +100,11 @@ INSERT INTO `description` (`artist_id`, `description`, `quote`, `url`) VALUES
 -- Tabellenstruktur für Tabelle `events`
 --
 
-CREATE TABLE IF NOT EXISTS `events` (
+CREATE TABLE `events` (
   `id` int(11) NOT NULL,
   `artist_id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `start_date` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `end_date` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `created` datetime NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=Active, 0=Block'
+  `start_date` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -118,13 +113,12 @@ CREATE TABLE IF NOT EXISTS `events` (
 -- Tabellenstruktur für Tabelle `stats`
 --
 
-CREATE TABLE IF NOT EXISTS `stats` (
-  `artist_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `stats` (
+  `artist_id` int(11) NOT NULL,
   `sales` int(11) NOT NULL,
   `plays` int(11) NOT NULL,
-  `listeners` int(11) NOT NULL,
-  PRIMARY KEY (`artist_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+  `listeners` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `stats`
@@ -156,17 +150,15 @@ INSERT INTO `stats` (`artist_id`, `sales`, `plays`, `listeners`) VALUES
 -- Tabellenstruktur für Tabelle `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `passwort` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `vorname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `nachname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `users`
@@ -191,3 +183,48 @@ INSERT INTO `users` (`id`, `email`, `passwort`, `vorname`, `nachname`, `created_
 (16, 'eliminate@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Eliminate', '', '2019-02-12 19:17:28', NULL),
 (17, 'sanholo@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'San', 'Holo', '2019-02-12 19:17:28', NULL),
 (18, 'razeexe@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Raze.Exe', '', '2019-02-12 19:17:28', NULL);
+
+--
+-- Indizes der exportierten Tabellen
+--
+
+--
+-- Indizes für die Tabelle `artist`
+--
+ALTER TABLE `artist`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `stats`
+--
+ALTER TABLE `stats`
+  ADD PRIMARY KEY (`artist_id`);
+
+--
+-- Indizes für die Tabelle `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT für exportierte Tabellen
+--
+
+--
+-- AUTO_INCREMENT für Tabelle `artist`
+--
+ALTER TABLE `artist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT für Tabelle `stats`
+--
+ALTER TABLE `stats`
+  MODIFY `artist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT für Tabelle `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;

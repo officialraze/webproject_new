@@ -29,7 +29,8 @@ $query = "SELECT * FROM `artist` artists
 // set up the calendar
 echo '<h1 class="tour_date_title">'.TOUR_DATES.'</h1>';
 
-$mayevent = '15-05-2019';
+$event_date = '15-05-2019';
+$event_title = 'Mai Event';
 
 
 
@@ -41,8 +42,8 @@ $mayevent = '15-05-2019';
 	$(document).ready(function () {
 		// Event Demo init
 		$("#event-cal-container").simpleCalendar({
-			events: ['04-03-2019', '08-03-2019', '12-03-2019', '15-03-2019', '<?php echo $mayevent; ?>'],
-			eventsInfo: ['John\'s Birthday', 'Janet\'s Marriage','Graduation Day', 'Final Exams !'],
+			events: ['<?php echo $event_date; ?>'],
+			eventsInfo: ['<?php echo $event_title; ?>'],
 			selectCallback: function(date){
 				console.log('date selected '+date);
 			}

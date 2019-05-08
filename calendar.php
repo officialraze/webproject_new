@@ -1,11 +1,6 @@
 <?php
 
-// require basics
-require 'config.php';
-require 'language/de.php';
-
 // session information
-session_start();
 if (isset($_SESSION['userid'])) {
 	$user_id = $_SESSION['userid'];
 }
@@ -32,6 +27,8 @@ echo '<h1 class="tour_date_title">'.TOUR_DATES.'</h1>';
 $event_date = '15-05-2019';
 $event_title = 'Mai Event';
 
+
+$events_date = array();
 
 
 ?>

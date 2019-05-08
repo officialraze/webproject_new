@@ -1,14 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Erstellungszeit: 07. Mai 2019 um 12:43
--- Server-Version: 5.7.23
--- PHP-Version: 7.2.10
+-- Erstellungszeit: 08. Mai 2019 um 18:14
+-- Server-Version: 5.6.34-log
+-- PHP-Version: 7.1.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Datenbank: `artists`
@@ -23,15 +31,16 @@ USE `artists`;
 -- Tabellenstruktur für Tabelle `artist`
 --
 
-CREATE TABLE `artist` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `artist` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `artist_name` varchar(15) DEFAULT NULL,
   `genre` varchar(18) DEFAULT NULL,
   `age` varchar(9) DEFAULT NULL,
   `popular_song` varchar(21) DEFAULT NULL,
   `listeners` varchar(10) DEFAULT NULL,
-  `images` varchar(14) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `images` varchar(14) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `artist`
@@ -63,7 +72,7 @@ INSERT INTO `artist` (`id`, `artist_name`, `genre`, `age`, `popular_song`, `list
 -- Tabellenstruktur für Tabelle `description`
 --
 
-CREATE TABLE `description` (
+CREATE TABLE IF NOT EXISTS `description` (
   `artist_id` int(11) NOT NULL,
   `description` text NOT NULL,
   `quote` text,
@@ -76,7 +85,7 @@ CREATE TABLE `description` (
 
 INSERT INTO `description` (`artist_id`, `description`, `quote`, `url`) VALUES
 (1, 'Nachdem er bei YAWA Recordings als Ekowraith seine erste Single, „Booming Track“, veröffentlichte, wechselte er zu den Labels Glamara Records und Big Fish Recordings und produzierte Musik unter seinem echten Namen. Seine erste Veröffentlichung bei diesen Labels war „Say My Name“, welche in den Beatport-Electro-House-Charts Platz eins erreichen konnte. 2011 unterschrieb er einen Vertrag bei Skrillexs Plattenlabel OWSLA. Es erschien daraufhin seine erste EP Spitfire, an welcher er laut eigenen Angaben fünf bis sechs Monate arbeitete. Sie konnte Platz eins der iTunes-Dance-Charts und Platz eins der Beatport-Charts erreichen.\r\n\r\nNach sechs kommerziell wenig erfolgreichen veröffentlichten Singles 2010 erschien 2012 seine siebte, „Language“, die bei den Labels Ministry Of Sound und Big Beat Records erschien. Diese konnte neben Platz eins der Beatport- und der iTunes-Dance-Charts auch Platz neun der britischen Charts sowie Platz drei der britischen Dance-Charts erreichen und wurde damit Robinsons erster Top-10-Hit.\r\n\r\n2016 kündigte er an, gemeinsam mit seinem DJ-Kollegen und Freund Madeon auf Tour gehen wird. Diese trägt den Namen „Shelter-Tour“. Shelter ist auch der Titel ihrer ersten gemeinsamen Single. Shelter lässt sich in den Bereich des zu der Zeit sehr beliebten Future-Bass einordnen. Das Musikvideo stammt vom japanischen Animationsstudio A-1 Pictures.\r\n\r\nRemixe produzierte er unter anderem für Yolanda Be Cools und DCUPs „We No Speak Americano“, Aviciis „Seek Bromance“ und Lady Gagas „The Edge of Glory“.', 'Is anyone there?', ''),
-(2, 'Brunn has had numerous Beatport chart hits including \"One For All, All For One\" with Razihel and \"Cali Born\" with Helicopter Showdown. Other electronic music outlets, such as Your EDM, have called his music \"non-traditional\" and \"edgy\", comparing him to artists like Savant.\n\nPrior to producing under the alias \"Virtual Riot\", Brunn produced ambient dubstep and future garage music under another alias, Your Personal Tranquilizer.\n\nBrunn has released several EPs under Disciple Records, including his charted EP, Chemistry.', 'We need more washing machines', ''),
+(2, '<p>Brunn has had numerous Beatport chart hits including \"One For All, All For One\" with Razihel and \"Cali Born\" with Helicopter Showdown. Other electronic music outlets, such as Your EDM, have called his music \"non-traditional\" and \"edgy\", comparing him to artists like Savant. Prior to producing under the alias \"Virtual Riot\", Brunn produced ambient dubstep and future garage music under another alias, Your Personal Tranquilizer. Brunn has released several EPs under Disciple Records, including his charted EP, Chemistry.</p>', '<p>We need more washing machines.</p>', ''),
 (3, 'Oskar Steinbeck, bekannt unter seinem Künstlernamen Panda Eyes, ist ein Schweizer Komponist, Plattenproduzent und DJ aus Zürich, Schweiz.', 'Ja min bueb', ''),
 (4, 'Sonny Moore wuchs im Nordosten von Los Angeles auf. 2004, im Alter von 16 Jahren, kam er über MySpace in Kontakt mit Matt Good von der Band From First to Last und wollte dort Gitarre spielen. Nachdem die anderen Bandmitglieder und einige Studioproduzenten ihn singen hörten, wurde er jedoch zum Leadsänger der Band gemacht. Im Juni 2004 veröffentlichten sie ihr Debütalbum Dear Diary, My Teen Angst Has a Body Count bei Epitaph Records. Die Band hatte mehrere erfolgreiche Tourneen und veröffentlichte im März 2006 ihr zweites Album Heroine. Schließlich bekam Sonny Stimmprobleme und unterzog sich erfolgreich einem chirurgischen Eingriff. Am 27. Februar 2007 verkündete er dennoch, dass er die Band verlassen würde, um sich einer Solokarriere zu widmen.\n\nErst veröffentlichte er einige Demos auf seiner MySpace-Seite und nach einigen Monaten ging er mit Team Sleep auf Tournee. Im Februar 2008 verkündete das Alternative Press Magazine die zweite jährliche AP-Tournee mit All Time Low, The Rocket Summer, The Matches, Forever the Sickest Kids und Sonny Moore. Während der Tournee umfasste Sonnys Besetzung Sean Friday am Schlagzeug, Christopher Null als Gitarrist und Aaron Rother am Keyboard.\n\n2008 begann Sonny auch Musik zu produzieren und hatte unter dem Pseudonym Skrillex Auftritte in verschiedenen Clubs in der Region um Los Angeles. Am 7. April 2009 erschien mit Gypsyhook EP seine erste Extended Play mit drei Songs und vier Remixen. Diese wurde unter seinem Vornamen Sonny veröffentlicht. Er ging erneut mit verschiedenen Bands auf Tournee und trat im April 2009 mit der Band Hollywood Undead als Sonny and the Blood Monkeys auf.\n\nSeine erste Produktion unter dem Namen Skrillex veröffentlichte er am 7. Juni 2010 mit der EP My Name Is Skrillex, die er als freien Download zur Verfügung stellte. Im Sommer 2010 arbeitete er mit der Metalcore-Band Bring Me the Horizon an deren drittem Studioalbum There Is a Hell, Believe Me I’ve Seen It. There Is a Heaven, Let’s Keep It a Secret. Schließlich wurde er von Deadmau5 auf dessen Musiklabel mau5trap Recordings unter Vertrag genommen und veröffentlichte auf diesem seine zweite EP Scary Monsters and Nice Sprites.\n\nIm April 2011 veröffentlichte die Band Korn den Song Get Up!, den Skrillex produzierte. Der Song wurde auf ihrer Facebook-Seite als freier Download zur Verfügung gestellt. Am 15. April 2011 kam Korn außerdem auf die Bühne während dessen Set am Coachella-Musikfestival 2011 und hatte einen kurzen Auftritt.\n\nAugust 2011 gründete Skrillex sein Plattenlabel OWSLA. Im September 2011 veröffentlichte Skrillex den Titelsong für die Neuauflage des Computerspiels Syndicate. 2011 konnte sich Skrillex auch erstmals in der Wahl der Top 100 DJs von DJ Mag platzieren und kam auf Platz 19. Es war der höchste Neueinstieg in die Liste in jenem Jahr. Im November 2011 wurde er fünfmal für den Grammy Award nominiert, darunter „Bester neuer Künstler“ und „Bestes Musikvideo“, von denen er im Februar 2012 drei gewonnen hat („Beste Dance-Aufnahme“, „Bestes Electronic/Dance-Album“ und „Beste Remix-Aufnahme“). Beim Sound of 2012 der BBC belegte er als prominentester der 15 Kandidaten Platz 4. Auch bei den Grammy-Verleihungen 2013 wurde Skrillex für die „Beste Dance-Aufnahme“ und das „Beste Electronic/Dance-Album“ ausgezeichnet.\n\nVon 2011 bis Oktober 2012 war Sonny Moore mit der britischen Singer-Songwriterin Ellie Goulding liiert.\n\nSein Album Recess erschien am 14. März 2014 in Deutschland.\n\nAm 5. August 2016 erschien die Single Purple Lamborghini mit dem amerikanischen Rapper Rick Ross. Die Single ist der Soundtrack des amerikanischen Actionfilms Suicide Squad.\n\nAm 15. Januar 2017 erschien die Single Make War, die er zusammen mit der Band From First to Last aufgenommen hatte (Sonny ist der ehemalige Leadsänger der Band und der Song erschien an seinem Geburtstag). Die Single wurde unter seinem Label OWSLA veröffentlicht.\n\nAußerdem erschienen 2017 die Single Would You Ever mit Poo Bear und Skrillex\' Remix von Kendrick Lamars Single Humble.', 'Bangarang', ''),
 (5, 'Thomas Wesley Pentz (* 10. November 1978 in Tupelo, Mississippi) ist ein US-amerikanischer Musiker und DJ im Bereich der elektronischen Musik, des Hip-Hops sowie des Baile Funks, der unter dem Künstlernamen Diplo sein erstes Album bei Big Dada Recordings im Jahr 2004 veröffentlicht hat. Weitere Pseudonyme von ihm sind Diplodocus, Wes Gully und Wes Diplo, zudem ist er durch die Musikprojekte Major Lazer und Jack Ü bekannt.', 'Earthquake', ''),
@@ -100,12 +109,37 @@ INSERT INTO `description` (`artist_id`, `description`, `quote`, `url`) VALUES
 -- Tabellenstruktur für Tabelle `events`
 --
 
-CREATE TABLE `events` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `artist_id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `start_date` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `start_date` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Daten für Tabelle `events`
+--
+
+INSERT INTO `events` (`id`, `artist_id`, `title`, `start_date`) VALUES
+(1, 12, 'Avicii - Open Air', '30-05-2019'),
+(2, 1, 'Second Sky Festival', '05-06-2019'),
+(3, 2, 'Rampage Las Vegas', '19-06-2019'),
+(4, 3, 'Rampage Las Vegas', '19-06-2019'),
+(5, 4, 'Rampage Las Vegas', '17-05-2019'),
+(6, 5, 'Ultra Festival', '22-05-2019'),
+(7, 6, 'Lost Lands', '16-07-2019'),
+(8, 7, 'Lost Lands', '16-07-2019'),
+(9, 8, 'Lost Lands', '16-07-2019'),
+(10, 9, 'Tokyo Festival', '29-07-2019'),
+(11, 10, 'Tokyo Festival', '29-07-2019'),
+(12, 11, 'Rampage Las Vegas', '29-07-2019'),
+(13, 13, 'Second Sky Festival', '30-05-2019'),
+(14, 14, 'Excision and the headbangers', '02-07-2019'),
+(15, 15, 'Excision and the headbangers', '02-07-2019'),
+(16, 16, 'Lost Lands', '16-07-2019'),
+(17, 17, 'Bitbird Tour', '06-06-2019'),
+(18, 18, 'Scala', '25-07-2019');
 
 -- --------------------------------------------------------
 
@@ -113,12 +147,13 @@ CREATE TABLE `events` (
 -- Tabellenstruktur für Tabelle `stats`
 --
 
-CREATE TABLE `stats` (
-  `artist_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `stats` (
+  `artist_id` int(11) NOT NULL AUTO_INCREMENT,
   `sales` int(11) NOT NULL,
   `plays` int(11) NOT NULL,
-  `listeners` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `listeners` int(11) NOT NULL,
+  PRIMARY KEY (`artist_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `stats`
@@ -150,15 +185,17 @@ INSERT INTO `stats` (`artist_id`, `sales`, `plays`, `listeners`) VALUES
 -- Tabellenstruktur für Tabelle `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `passwort` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `vorname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `nachname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `users`
@@ -183,48 +220,8 @@ INSERT INTO `users` (`id`, `email`, `passwort`, `vorname`, `nachname`, `created_
 (16, 'eliminate@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Eliminate', '', '2019-02-12 19:17:28', NULL),
 (17, 'sanholo@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'San', 'Holo', '2019-02-12 19:17:28', NULL),
 (18, 'razeexe@gmail.com', '$2y$10$ESNZsqKD5ZcHsOavuszy9.K7gTnlZF/yKynzxjPkpetOkMxrBPoCW', 'Raze.Exe', '', '2019-02-12 19:17:28', NULL);
+COMMIT;
 
---
--- Indizes der exportierten Tabellen
---
-
---
--- Indizes für die Tabelle `artist`
---
-ALTER TABLE `artist`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `stats`
---
-ALTER TABLE `stats`
-  ADD PRIMARY KEY (`artist_id`);
-
---
--- Indizes für die Tabelle `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- AUTO_INCREMENT für exportierte Tabellen
---
-
---
--- AUTO_INCREMENT für Tabelle `artist`
---
-ALTER TABLE `artist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT für Tabelle `stats`
---
-ALTER TABLE `stats`
-  MODIFY `artist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT für Tabelle `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

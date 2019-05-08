@@ -15,9 +15,17 @@ if (isset($_SESSION['userid'])) {
 
 if (HOME == true) {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
+	$servername = "localhost";
+	$username = "root";
+	$password = "root";
+	$dbname = "artists";
 }
 else {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "artists";
 }
 
 $band_query = "SELECT * FROM `artist` artists
@@ -233,34 +241,77 @@ WHERE `id` = $user_id";
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title">Biographie anpassen</h4>
-						<textarea name="content" id="editor"><?php
-							// description in ckeditor
-							foreach ($pdo->query($band_query) as $row) {
-		  					  echo utf8_encode($row['description']);
-		  				  }
-						?></textarea>
-						<br>
-						<h4 class="card-title">Zitat anpassen</h4>
-						<textarea name="content" id="editor_quote"><?php
-							// description in ckeditor
-							foreach ($pdo->query($band_query) as $row) {
-		  					  echo $row['quote'];
-		  				  }
-						?></textarea>
-						<br>
-						<button type="button" class="btn btn-gradient-success btn-fw">Speichern</button>
+						<form class="content_artist" method="post">
+
+							<textarea type="text" name="content_description" id="editor">
+								<?php
+								// description in ckeditor
+								foreach ($pdo->query($band_query) as $row) {
+			  					  echo $row['description'];
+				  				  }
+								?>
+							</textarea>
+							<br>
+
+							<h4 class="card-title">Zitat anpassen</h4>
+
+							<textarea name="content_quote" id="editor_quote"><?php
+								// description in ckeditor
+								foreach ($pdo->query($band_query) as $row) {
+			  					  echo $row['quote'];
+			  				  }
+							?></textarea>
+							<br>
+
+							<input class="btn" type="submit" name="save" value="Speichern">
+						</form>
+
+						<?php
+
+							if(!empty($_POST) || !empty($_POST['content_description']) || !empty($_POST['content_quote'])) {
+								$content_description = $_POST['content_description'];
+								$content_quote = $_POST['content_quote'];
+
+								// Create connection
+								$conn = new mysqli($servername, $username, $password, $dbname);
+								// Check connection
+								if ($conn->connect_error) {
+								    die("Connection failed: " . $conn->connect_error);
+								}
+
+								if (!empty($_POST)) {
+									// $sql = "UPDATE `description` SET `description`= '".$content_description."', `quote`= '".$content_quote."' WHERE `artist_id`= '".$user_id."'";
+									$sql = "UPDATE `description` SET `description`='".$content_description."',`quote`='".$content_quote."' WHERE `artist_id` = $user_id";
+									if ($conn->query($sql) == TRUE) {
+										header("refresh: 0");
+									    echo "Daten wurden erfolgreich aktualisiert";
+									}
+									else {
+									    echo "Fehler beim Aktualisieren der Daten: " . $conn->error;
+									}
+								}
+
+								$conn->close();
+							}
+						 ?>
 					</div>
 				</div>
             </div>
             <div class="col-md-5 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tourdaten</h4>
-				  <ul class="list-arrow">
-				  	<li><span class="date">16.03.2019</span> - <span class="place">Brig, Schweiz</span></li>
-						<li><span class="date">26.03.2019</span> - <span class="place">Bern, Schweiz</span></li>
-						<li><span class="date">11.04.2019</span> - <span class="place">Zürich, Schweiz</span></li>
-				  </ul>
+                  <h4 class="card-title">Youtube Video</h4>
+				  <div class="youtube_iframe">
+					  <?php
+						$url = "https://www.youtube.com/watch?v=eTUizYzQOWk";
+						parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
+					  ?>
+					  <iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $my_array_of_vars['v']; ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				  </div>
+				  <form class="youtube_url" action="index.php" method="post">
+					  <input id="editor_youtube" type="text" name="url" value="URL einfügen"><br>
+					  <input class="btn" type="submit" name="submitter" value="Speichern">
+				  </form>
                 </div>
               </div>
             </div>
@@ -324,6 +375,7 @@ WHERE `id` = $user_id";
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
 
+
   <script>
     ClassicEditor
         .create( document.querySelector( '#editor' ) )
@@ -333,6 +385,12 @@ WHERE `id` = $user_id";
 
 	ClassicEditor
         .create( document.querySelector( '#editor_quote' ) )
+        .catch( error => {
+            console.error( error );
+	        } );
+
+	ClassicEditor
+        .create( document.querySelector( '#editor_youtube' ) )
         .catch( error => {
             console.error( error );
 	        } );

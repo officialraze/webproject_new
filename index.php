@@ -1,6 +1,7 @@
 <?php
 
 require 'config.php';
+require 'language/de.php';
 
 // session information
 session_start();
@@ -65,12 +66,21 @@ if(isset($_POST['query'])) {
 		<link href='http://fonts.googleapis.com/css?family=Raleway:100,700,800' rel='stylesheet' type='text/css'>
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
+		<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+	    <link rel="stylesheet" href="https://unpkg.com/tippy.js@4/themes/light-border.css">
+	  	<link rel="stylesheet" href="https://unpkg.com/tippy.js@4/themes/translucent.css">
+		<link rel="stylesheet" href="css/calendar.css">
+
+	    <script src="https://unpkg.com/popper.js@1/dist/umd/popper.min.js"></script>
+	    <script src="https://unpkg.com/tippy.js@4"></script>
+
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/foundation.min.js"></script>
 		<script type="text/javascript" src="js/functions.js"></script>
 		<script src="js/jquery.sticky.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css" />
 		<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
+		<script src="js/calendar.js"></script>
 
 		<!-- Include Amplitude JS -->
 		<script type="text/javascript" src="js/amplitude.js"></script>
@@ -97,8 +107,8 @@ if(isset($_POST['query'])) {
 			<div class="login_form">
 				<ul>
 					<?php if (!isset($_SESSION['userid'])) { ?>
-						<li><a href="register.php">Registrieren</a></li>
-						<li><a href="login.php">Anmelden</a></li>
+						<li><a href="register.php"><?php echo REGISTER; ?></a></li>
+						<li><a href="login.php"><?php echo LOGIN; ?></a></li>
 					<?php } ?>
 					<?php if (isset($_SESSION['userid'])) { ?>
 						<li><a href="logout.php">Ausloggen</a></li>
@@ -108,7 +118,7 @@ if(isset($_POST['query'])) {
 				</ul>
 			</div>
 
-			<h1 class="site_title">Webprojekt</h1>
+			<h1 class="site_title"><?php echo WEBSITE_TITLE; ?></h1>
 			<div class="logged_in">
 				<?php
 
@@ -237,6 +247,12 @@ if(isset($_POST['query'])) {
 							echo '<h3 class="content__item-listeners"><i class="fab fa-spotify"></i>'.$row['listeners'].'</h3>';
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
 							echo "</div>";
+							?>
+							<h1 class="youtube_title"><?php echo NEWEST_VIDEO; ?></h1>
+							<div class="youtube_iframe">
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							</div>
+							<?php
 					}
 
 				}
@@ -255,6 +271,19 @@ if(isset($_POST['query'])) {
 							echo '<h3 class="content__item-subtitle">'.$row['quote'].'</h3>';
 							echo '<h3 class="content__item-listeners"><i class="fab fa-spotify"></i> '.$row['listeners'].'</h3>';
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
+							?>
+							<h1 class="youtube_title"><?php echo NEWEST_VIDEO; ?></h1>
+							<div class="youtube_iframe">
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							</div>
+
+							<!-- calendar -->
+							<?php echo '<h1 class="tour_date_title">'.TOUR_DATES.'</h1>'; ?>
+							<div id="container" class="calendar-container" data-tippy-content="content tip"></div>
+							<?php
+							echo '<div id="event-cal-container_'.$row['id'].'" class="calendar-container"></div>';
+							include 'calendar.php';
+
 				?>
 
 				<?php echo "</div>"; } } ?>

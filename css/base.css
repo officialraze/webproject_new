@@ -138,6 +138,11 @@ main {
 	width: 180px;
 	margin: 0 auto;
 }
+.form_inner h2,
+.form_inner .login_success_title,
+.form_inner p {
+	color: #000;
+}
 .login_form ul {
 	margin: 0;
 }
@@ -468,4 +473,27 @@ main {
 	.content__indicator {
 		display: block;
 	}
+}
+
+/* youtube_iframe */
+h1.youtube_title {
+	margin-top: 85px;
+}
+div.youtube_iframe {
+	position: relative;
+	height: 0;
+	padding: 0 0 56.2%;
+}
+div.youtube_iframe iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100% !important;
+	height: 100% !important;
+}
+
+.tour_date_title {
+	margin-top: 50px;
 }

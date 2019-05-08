@@ -241,8 +241,9 @@ WHERE `id` = $user_id";
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title">Biographie anpassen</h4>
-						<form onsubmit="setTimeout(function () { window.location.reload(); }, 10)" class="content_artist" action="index.php" method="post">
-							<textarea name="content_description" id="editor">
+						<form class="content_artist" method="post">
+
+							<textarea type="text" name="content_description" id="editor">
 								<?php
 								// description in ckeditor
 								foreach ($pdo->query($band_query) as $row) {
@@ -270,32 +271,29 @@ WHERE `id` = $user_id";
 							if(!empty($_POST) || !empty($_POST['content_description']) || !empty($_POST['content_quote'])) {
 								$content_description = $_POST['content_description'];
 								$content_quote = $_POST['content_quote'];
-							}
 
-							// Create connection
-							$conn = new mysqli($servername, $username, $password, $dbname);
-							// Check connection
-							if ($conn->connect_error) {
-							    die("Connection failed: " . $conn->connect_error);
-							}
-
-							if (!empty($_POST)) {
-								$sql = "UPDATE `description`
-										SET `description`= '".$content_description."', `quote`= '".$content_quote."'
-										WHERE `artist_id`= '".$user_id."'";
-
-								if ($conn->query($sql) === TRUE) {
-								    echo "Daten wurden erfolgreich aktualisiert";
-										// header("Refresh:0");
+								// Create connection
+								$conn = new mysqli($servername, $username, $password, $dbname);
+								// Check connection
+								if ($conn->connect_error) {
+								    die("Connection failed: " . $conn->connect_error);
 								}
-								else {
-								    echo "Fehler beim Aktualisieren der Daten: " . $conn->error;
-								}
-							}
 
-							$conn->close();
+								if (!empty($_POST)) {
+									// $sql = "UPDATE `description` SET `description`= '".$content_description."', `quote`= '".$content_quote."' WHERE `artist_id`= '".$user_id."'";
+									$sql = "UPDATE `description` SET `description`='".$content_description."',`quote`='".$content_quote."' WHERE `artist_id` = $user_id";
+									if ($conn->query($sql) == TRUE) {
+										header("refresh: 0");
+									    echo "Daten wurden erfolgreich aktualisiert";
+									}
+									else {
+									    echo "Fehler beim Aktualisieren der Daten: " . $conn->error;
+									}
+								}
+
+								$conn->close();
+							}
 						 ?>
-
 					</div>
 				</div>
             </div>

@@ -276,8 +276,12 @@ if(isset($_POST['query'])) {
 							<div class="youtube_iframe">
 								<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							</div>
-							<?php
 
+							<!-- calendar -->
+							<?php echo '<h1 class="tour_date_title">'.TOUR_DATES.'</h1>'; ?>
+							<div id="container" class="calendar-container" data-tippy-content="content tip"></div>
+							<?php
+							echo '<div id="event-cal-container_'.$row['id'].'" class="calendar-container"></div>';
 							include 'calendar.php';
 
 				?>

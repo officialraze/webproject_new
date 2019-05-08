@@ -13,39 +13,30 @@ else {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
 }
 
-
 // query for everything
 $query = "SELECT * FROM `artist` artists
-		  INNER JOIN `description` infos ON infos.artist_id = artists.id
-		  ORDER BY `artist_name`
+		  INNER JOIN `events` events ON events.artist_id = artists.id
 		  ";
-
-
-// set up the calendar
-echo '<h1 class="tour_date_title">'.TOUR_DATES.'</h1>';
-
-$event_date = '15-05-2019';
-$event_title = 'Mai Event';
-
-
-$events_date = array();
-
-
 ?>
-<div id="container" class="calendar-container" data-tippy-content="content tip"></div>
-<div id="event-cal-container" class="calendar-container"></div>
 
 <script>
 	$(document).ready(function () {
-		// Event Demo init
-		$("#event-cal-container").simpleCalendar({
-			events: ['<?php echo $event_date; ?>'],
-			eventsInfo: ['<?php echo $event_title; ?>'],
-			selectCallback: function(date){
-				console.log('date selected '+date);
-			}
-		});
+		<?php
 
+		foreach ($pdo->query($query) as $row) {
+			if (is_array($row) && !empty($row)) { ?>
+				$("#event-cal-container_<?php echo $row['artist_id'];?>").simpleCalendar({
+					events: ['<?php echo $row['start_date']; ?>'],
+					eventsInfo: ['<?php echo $row['title']; ?>'],
+					selectCallback: function(date){
+						console.log('date selected '+date);
+					}
+				});
+			<?php }
+		}
+
+		?>
+		// for tiptool
 		tippy('.day.event', {
 			theme: 'translucent',
 		});

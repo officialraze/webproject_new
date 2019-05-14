@@ -51,7 +51,7 @@ else {
 		}
 
 
-
+		// return error message
 		if(isset($errorMessage)) {
 		    echo '<span class="error">'.$errorMessage.'<span>';
 		}

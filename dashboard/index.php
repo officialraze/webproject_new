@@ -2,6 +2,7 @@
 
 require '../config.php';
 
+// start session for logged in user
 session_start();
 if (!isset($_SESSION['userid'])) {
 	if(!isset($_SESSION['userid'])) {
@@ -9,10 +10,12 @@ if (!isset($_SESSION['userid'])) {
 	}
 }
 
+// set user id
 if (isset($_SESSION['userid'])) {
 	$user_id = $_SESSION['userid'];
 }
 
+// connect database
 if (HOME == true) {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 	$servername = "localhost";
@@ -28,10 +31,12 @@ else {
 	$dbname = "artists";
 }
 
+// set band query
 $band_query = "SELECT * FROM `artist` artists
 INNER JOIN `description` infos ON infos.artist_id = artists.id
 WHERE `id` = $user_id";
 
+// stats
 $stats_query = "SELECT * FROM `artist` artists
 INNER JOIN `stats` stats ON stats.artist_id = artists.id
 WHERE `id` = $user_id";
@@ -39,7 +44,7 @@ WHERE `id` = $user_id";
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
   <!-- Required meta tags -->
@@ -296,53 +301,6 @@ WHERE `id` = $user_id";
 						 ?>
 					</div>
 				</div>
-            </div>
-            <div class="col-md-5 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Youtube Video</h4>
-				  <div class="youtube_iframe">
-					  <?php
-						$url = "https://www.youtube.com/watch?v=eTUizYzQOWk";
-						parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
-					  ?>
-					  <iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $my_array_of_vars['v']; ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-				  </div>
-				  <form class="youtube_url" action="index.php" method="post">
-					  <input id="editor_youtube" type="text" name="url" value="URL einfügen"><br>
-					  <input class="btn" type="submit" name="submitter" value="Speichern">
-				  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Bilder</h4>
-                  <div class="d-flex">
-                    <div class="d-flex align-items-center mr-4 text-muted font-weight-light">
-                      <i class="mdi mdi-account-outline icon-sm mr-2"></i>
-                      <span>raze.exe</span>
-                    </div>
-                    <div class="d-flex align-items-center text-muted font-weight-light">
-                      <i class="mdi mdi-clock icon-sm mr-2"></i>
-                      <span><?php echo date("d.F.Y") ?></span>
-                    </div>
-                  </div>
-                  <div class="row mt-3">
-                    <div class="col-6 pr-1">
-                      <!-- <img src="images/dashboard/img_1.jpg" class="mb-2 mw-100 w-100 rounded" alt="image">
-                      <img src="images/dashboard/img_4.jpg" class="mw-100 w-100 rounded" alt="image"> -->
-                    </div>
-                    <div class="col-6 pl-1">
-                      <!-- <img src="images/dashboard/img_2.jpg" class="mb-2 mw-100 w-100 rounded" alt="image">
-                      <img src="images/dashboard/img_3.jpg" class="mw-100 w-100 rounded" alt="image"> -->
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

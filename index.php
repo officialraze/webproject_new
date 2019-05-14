@@ -246,17 +246,15 @@ if(isset($_POST['query'])) {
 							echo '<h3 class="content__item-subtitle">'.$row['quote'].'</h3>';
 							echo '<h3 class="content__item-listeners"><i class="fab fa-spotify"></i>'.$row['listeners'].'</h3>';
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
-							echo "</div>";
 							?>
-							<h1 class="youtube_title"><?php echo NEWEST_VIDEO; ?></h1>
-							<div class="youtube_iframe">
-								<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-							</div>
+							<!-- calendar -->
+							<?php echo '<h1 class="tour_date_title">'.TOUR_DATES.'</h1>'; ?>
+							<div id="container" class="calendar-container" data-tippy-content="content tip"></div>
 							<?php
-					}
-
-				}
-
+							echo '<div id="event-cal-container_'.$row['id'].'" class="calendar-container"></div>';
+							include 'calendar.php';
+							echo "</div>"; } }
+							
 				// if empty show all
 				else if(empty($search)) {
 					foreach ($pdo->query($query) as $row) {
@@ -272,10 +270,6 @@ if(isset($_POST['query'])) {
 							echo '<h3 class="content__item-listeners"><i class="fab fa-spotify"></i> '.$row['listeners'].'</h3>';
 							echo '<div class="content__item-text"><p>'.$row['description'].'</p></div>';
 							?>
-							<h1 class="youtube_title"><?php echo NEWEST_VIDEO; ?></h1>
-							<div class="youtube_iframe">
-								<iframe width="560" height="315" src="https://www.youtube.com/embed/eTUizYzQOWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-							</div>
 
 							<!-- calendar -->
 							<?php echo '<h1 class="tour_date_title">'.TOUR_DATES.'</h1>'; ?>
@@ -285,7 +279,6 @@ if(isset($_POST['query'])) {
 							include 'calendar.php';
 
 				?>
-
 				<?php echo "</div>"; } } ?>
 				<button class="content__close"><i class="fas fa-times"></i></button>
 				<svg class="content__indicator icon icon--caret"><use xlink:href="#icon-caret"></use></svg>

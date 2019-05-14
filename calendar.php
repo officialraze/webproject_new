@@ -23,6 +23,7 @@ $query = "SELECT * FROM `artist` artists
 	$(document).ready(function () {
 		<?php
 
+		// return calendar for each artist
 		foreach ($pdo->query($query) as $row) {
 			if (is_array($row) && !empty($row)) { ?>
 				$("#event-cal-container_<?php echo $row['artist_id'];?>").simpleCalendar({

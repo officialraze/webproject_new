@@ -13,6 +13,9 @@ if (isset($_SESSION['userid'])) {
 if (HOME == true) {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 }
+else if (SCHOOL == true) {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'dbadmin', 'db123');
+}
 else {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
 }
@@ -254,7 +257,7 @@ if(isset($_POST['query'])) {
 							echo '<div id="event-cal-container_'.$row['id'].'" class="calendar-container"></div>';
 							include 'calendar.php';
 							echo "</div>"; } }
-							
+
 				// if empty show all
 				else if(empty($search)) {
 					foreach ($pdo->query($query) as $row) {

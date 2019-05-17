@@ -9,6 +9,9 @@ if (isset($_SESSION['userid'])) {
 if (HOME == true) {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', 'root');
 }
+else if (SCHOOL == true) {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'dbadmin', 'db123');
+}
 else {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
 }

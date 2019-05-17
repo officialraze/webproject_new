@@ -23,6 +23,13 @@ if (HOME == true) {
 	$password = "root";
 	$dbname = "artists";
 }
+else if (SCHOOL == true) {
+	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'dbadmin', 'db123');
+	$servername = "localhost";
+	$username = "dbadmin";
+	$password = "db123";
+	$dbname = "artists";
+}
 else {
 	$pdo = new PDO('mysql:host=localhost;dbname=artists', 'root', '');
 	$servername = "localhost";
